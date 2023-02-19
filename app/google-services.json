@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "5354932667",
+    "project_id": "nunu-572ce",
+    "storage_bucket": "nunu-572ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5354932667:android:4322f0bbaec8fb53449c9e",
+        "android_client_info": {
+          "package_name": "com.example.ecbabywear"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "5354932667-q6dhbl0p5bgu7jm67fci4ta1hkrh5uvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0lgyushs07UudahQMgRaJKyf0dTgKEVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5354932667-q6dhbl0p5bgu7jm67fci4ta1hkrh5uvr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

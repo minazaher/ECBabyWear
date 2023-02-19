@@ -1,4 +1,4 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import java.util.ArrayList;
+import com.example.ecbabywear.R;
 
 public class SplashScreen extends AppCompatActivity {
 

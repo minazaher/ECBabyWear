@@ -1,4 +1,4 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI;
 
 import static com.example.ecbabywear.ApplicationClass.currentPiece;
 
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.ecbabywear.R;
 
 public class ItemDetails extends AppCompatActivity {
     TextView Name, des, price;

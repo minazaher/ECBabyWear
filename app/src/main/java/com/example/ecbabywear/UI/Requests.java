@@ -1,13 +1,15 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI;
 
 import static com.example.ecbabywear.ApplicationClass.cart;
-import static com.example.ecbabywear.ApplicationClass.pieces;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.ecbabywear.CartAdapter;
+import com.example.ecbabywear.R;
 
 public class Requests extends AppCompatActivity {
     RecyclerView recyclerView ;

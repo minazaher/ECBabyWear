@@ -5,122 +5,180 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:foregroundGravity=""
-    tools:context=".HomePage">
+    tools:context=".UI.HomePage.HomePage">
 
     <LinearLayout
-        android:id="@+id/top_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="20dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/coordinatorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout3"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="10dp"
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_gravity="start"
-            android:layout_weight="5"
-            android:background="@drawable/search_et"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:textSize="14sp"
-            android:hint="Search For Something"
-            android:textStyle="italic"
-            android:foregroundGravity="center_vertical"
-            android:paddingHorizontal="10dp" />
+        android:orientation="vertical">
+
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-            android:foregroundGravity="center"
-            android:gravity="end">
+            android:id="@+id/top_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            app:layout_constraintBottom_toTopOf="@id/linearLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_baseline_favorite_border_24" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginHorizontal="30dp"
-        android:background="@drawable/top_page_bg"
-        android:foregroundGravity="bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_search"
-        android:padding="10dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="120dp"
-            android:layout_height="130dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start"
+                android:layout_weight="5"
+                android:background="@drawable/search_et"
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:foregroundGravity="center_vertical"
+                android:hint="Search For Something"
+                android:paddingHorizontal="10dp"
+                android:textSize="14sp"
+                android:textStyle="italic" />
 
             <LinearLayout
-                android:id="@+id/linearLayout4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:foregroundGravity="center"
+                android:gravity="end">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_baseline_favorite_border_24" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginHorizontal="30dp"
+            app:layout_constraintVertical_weight="1"
+            android:background="@drawable/top_page_bg"
+            android:foregroundGravity="bottom"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/linear_recView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_search">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@drawable/svgviewer_output"
+                android:layout_height="130dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <!--            <ImageView-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="20dp"-->
-            <!--                android:scaleType="fitXY"-->
-            <!--                android:src="@drawable/ellipse"-->
-            <!--                android:alpha="0.7"-->
-            <!--                android:rotation="-2"-->
-            <!--                android:layout_marginTop="5dp"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/img_baby"/>-->
-            <ImageView
-                android:id="@+id/img_baby"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@drawable/svgviewer_output"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <!--            <ImageView-->
+                <!--                android:layout_width="0dp"-->
+                <!--                android:layout_height="20dp"-->
+                <!--                android:scaleType="fitXY"-->
+                <!--                android:src="@drawable/ellipse"-->
+                <!--                android:alpha="0.7"-->
+                <!--                android:rotation="-2"-->
+                <!--                android:layout_marginTop="5dp"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@id/img_baby"/>-->
+                <ImageView
+                    android:id="@+id/img_baby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.95"
+                    android:scaleX="3"
+                    android:scaleY="3"
+                    android:src="@drawable/baby1"
+                    android:translationX="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:translationX="0dp"
-                android:scaleX="3"
-                android:scaleY="3"
-                android:alpha="0.95"
-                android:src="@drawable/baby1"
-                app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/linearLayout4" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/poppinsbold"
+                android:gravity="center"
+                android:text="Cute Fashion \n for kids"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+        </LinearLayout>
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linear_recView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="@font/poppinsbold"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:text="Cute Fashion \n for kids"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:background="@color/white"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/coordinatorLayout"
+            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+            <TextView
+                android:id="@+id/tv_popular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinssemibold"
+                android:text="Popular"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/store_recview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="fill_horizontal"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="8"
+                tools:listitem="@layout/store_item" />
+
+            <ImageView
+                android:id="@+id/img_noData"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                android:scaleX="1.4"
+                android:scaleY="1.4"
+                android:src="@drawable/no_data_rafiki"/>
+        </LinearLayout>
     </LinearLayout>
 
 
@@ -137,32 +195,32 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
+            android:gravity="bottom"
             android:backgroundTint="#f6f6f6"
             android:padding="3dp"
             app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="0dp"
-            app:fabCradleVerticalOffset="0dp">
+            app:fabCradleRoundedCornerRadius="12dp"
+            app:fabCradleVerticalOffset="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-         >
+                android:layout_gravity="center_horizontal">
 
                 <LinearLayout
                     android:id="@+id/btn_home"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
-                    android:orientation="vertical"
-                    android:background="#497">
+                    android:background="@drawable/top_page_bg"
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_weight="1"
-                        app:tint="@color/white"
-                        app:srcCompat="@drawable/ic_baseline_home_24" />
+                        app:srcCompat="@drawable/ic_baseline_home_24"
+                        app:tint="@color/white" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -176,7 +234,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btn_profile"
+                    android:id="@+id/btn_swap"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -224,7 +282,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btn_help"
+                    android:id="@+id/btn_profile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -235,7 +293,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_baseline_person_24"
+                        app:srcCompat="@drawable/ic_baseline_sticky_note_2_24"
                         tools:ignore="NestedWeights" />
 
                     <TextView
@@ -244,7 +302,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Profile"
+                        android:text="Requests"
                         android:textAlignment="center"
                         android:textColor="#676767"
                         android:textSize="12sp" />

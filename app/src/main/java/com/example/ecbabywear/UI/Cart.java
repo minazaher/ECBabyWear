@@ -1,4 +1,4 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI;
 
 import static com.example.ecbabywear.ApplicationClass.cart;
 
@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.ecbabywear.CartAdapter;
+import com.example.ecbabywear.R;
 
 public class Cart extends AppCompatActivity {
     RecyclerView recyclerView;

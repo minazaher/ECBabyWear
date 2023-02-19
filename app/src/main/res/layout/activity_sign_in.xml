@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="36dp"
-    tools:context=".SignUp">
+    tools:context=".UI.SignUp">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinssemibold"
             android:text="@string/sign_in"
-            android:textColor="@color/Font_Color"
+            android:textColor="@color/pink_300"
             android:textSize="30sp"
             android:layout_marginBottom="20dp"/>
 
@@ -156,7 +156,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#1877F2"
-            android:checked="true"
             android:fontFamily="@font/poppinsregular"
             android:text="@string/remember_me"
             android:textColor="#4E4B66"
@@ -176,6 +175,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_signIn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="50dp"

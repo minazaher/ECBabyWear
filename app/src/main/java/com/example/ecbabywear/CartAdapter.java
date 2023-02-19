@@ -4,10 +4,7 @@ import static com.google.android.material.color.MaterialColors.getColor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +16,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.ecbabywear.Model.Piece;
 
 import java.util.ArrayList;
 
-public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.mViewHolder> {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
     private Context context;
     private ArrayList<Piece> pieceArrayList;
     private int contextBit;
 
-    public StoreAdapter(Context context, ArrayList<Piece> pieceArrayList, int contextBit) {
+    public CartAdapter(Context context, ArrayList<Piece> pieceArrayList, int contextBit) {
         this.context = context;
         this.pieceArrayList = pieceArrayList;
         this.contextBit = contextBit;
@@ -38,7 +36,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.mViewHolder>
     public mViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false);
-        return new mViewHolder(inflate);    }
+        return new mViewHolder(inflate);
+    }
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -60,13 +59,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.mViewHolder>
             holder.cart.setVisibility(View.GONE);
         }
 
-        holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, ItemDetails.class);
-            ApplicationClass.currentPiece = pieceArrayList.get(holder.getAdapterPosition());
-            holder.img.getContext().startActivity(intent);
-        });
+
         if (holder.getAdapterPosition() % 2 != 0)
-            holder.tv_Stat.setTextColor(Color.parseColor("#00FFFF"));
+            holder.tv_Stat.setTextColor(Color.RED);
         else
             holder.tv_Stat.setTextColor(Color.RED);
     }

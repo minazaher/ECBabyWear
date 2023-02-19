@@ -1,4 +1,4 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.ecbabywear.UI.HomePage;
+import com.example.ecbabywear.R;
+import com.example.ecbabywear.UI.HomePage.HomePage;
 
 public class SignIn extends AppCompatActivity {
 Button SignIn;

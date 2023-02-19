@@ -1,4 +1,4 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.Model;
 
 public class Piece {
     private String Name;
@@ -7,6 +7,10 @@ public class Piece {
     private String ShortDescription;
     private String LongDescription;
     private String Status;
+
+
+    public Piece() {
+    }
 
     public Piece(String name, String URL, String price) {
         Name = name;
@@ -77,6 +81,19 @@ public class Piece {
 
     public void setStatus(String status) {
         Status = status;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "Name='" + Name + '\'' +
+                ", URL='" + URL + '\'' +
+                ", Price='" + Price + '\'' +
+                ", ShortDescription='" + ShortDescription + '\'' +
+                ", LongDescription='" + LongDescription + '\'' +
+                ", Status='" + Status + '\'' +
+                '}';
     }
 }
 

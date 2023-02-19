@@ -1,8 +1,10 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.ecbabywear.R;
 
 public class Profile extends AppCompatActivity {
 

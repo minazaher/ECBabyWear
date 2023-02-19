@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EC Baby Wear</string>
+    <string name="app_name">NUNU</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in_here"> Sign in here!</string>
     <string name="you_can">you can  </string>
@@ -26,4 +26,6 @@
     <string name="enter_your_email">Enter Your Email</string>
     <string name="remember_me">Remember Me?</string>
     <string name="forgot_your_password">forgot your password?</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit strud exercitation ullamco laboris nisi ut aliquip ex ea commod ullamco.</string>
+    <string name="piece_nam">Newborn bodysuit</string>
 </resources>
