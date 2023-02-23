@@ -30,7 +30,7 @@
                 android:adjustViewBounds = "true"
                 android:scaleType="fitCenter"
                 android:maxHeight="120dp"
-                android:src="@drawable/kid_model" />
+                android:src="@drawable/green_logo" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout

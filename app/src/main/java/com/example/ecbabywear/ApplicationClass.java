@@ -15,25 +15,21 @@ public class ApplicationClass extends Application {
 //    public static MutableLiveData<ArrayList<Piece>> pieces;
     public static ArrayList<Piece> cart;
     public static ArrayList<Piece> approved;
-
+    public static ArrayList<Piece> FinalPieces;
     @Override
     public void onCreate() {
-        super.onCreate();
+            super.onCreate();
 
-//        pieces = new MutableLiveData<ArrayList<Piece>>();
-        cart = new ArrayList<>();
-        approved = new ArrayList<>();
+    //        pieces = new MutableLiveData<ArrayList<Piece>>();
+            cart = new ArrayList<>();
+            approved = new ArrayList<>();
 
 
-//        pieces.add(new Piece("Girl Winter Suit", "https://m.media-amazon.com/images/I/51dzdIMH-kL._AC_SX679_.jpg", "350.0 L.E", "Zipper Plush Onesie", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
-//        pieces.add(new Piece("Long Sleeve Suit", "https://m.media-amazon.com/images/I/410YJpaLQWS._AC_SX679_.jpg", "50.0 L.E", "Body Suit", "Elsayaad Cotton Long Sleeves Bodysuit for Kids - White, 6-9 Months","Approved"));
-//        pieces.add(new Piece("Printed Bodysuit", "https://m.media-amazon.com/images/I/41O0ELB5PLL._AC_.jpg", "150.0 L.E", "Full Body Suit", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
-//        pieces.add(new Piece("Printed Bodysuit", "https://m.media-amazon.com/images/I/41O0ELB5PLL._AC_.jpg", "150.0 L.E", "Full Body Suit", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
-//        pieces.add(new Piece("Girl Winter Suit", "https://m.media-amazon.com/images/I/51dzdIMH-kL._AC_SX679_.jpg", "350.0 L.E", "Zipper Plush Onesie", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
+            FinalPieces = (ArrayList<Piece>) PiecesViewModel.pieceList;
 
-        cart.add(new Piece("Printed Bodysuit", "https://m.media-amazon.com/images/I/41O0ELB5PLL._AC_.jpg", "150.0 L.E", "Full Body Suit", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
-        cart.add(new Piece("Girl Winter Suit", "https://m.media-amazon.com/images/I/51dzdIMH-kL._AC_SX679_.jpg", "350.0 L.E", "Zipper Plush Onesie", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
-        cart.add(new Piece("Printed Bodysuit", "https://m.media-amazon.com/images/I/41O0ELB5PLL._AC_.jpg", "150.0 L.E", "Full Body Suit", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
+            cart.add(new Piece("Printed Bodysuit", "https://m.media-amazon.com/images/I/41O0ELB5PLL._AC_.jpg", "150.0 L.E", "Full Body Suit", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
+            cart.add(new Piece("Girl Winter Suit", "https://m.media-amazon.com/images/I/51dzdIMH-kL._AC_SX679_.jpg", "350.0 L.E", "Zipper Plush Onesie", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
+            cart.add(new Piece("Printed Bodysuit", "https://m.media-amazon.com/images/I/41O0ELB5PLL._AC_.jpg", "150.0 L.E", "Full Body Suit", "Papillon Basic Snap Closure Bodysuit for Kids - White, 9 Months", "Pending"));
 
 
     }

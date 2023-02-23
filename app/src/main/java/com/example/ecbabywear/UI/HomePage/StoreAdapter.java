@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,10 +25,17 @@ import java.util.List;
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.viewholder> {
     private Context context;
     private List<Piece> pieceArrayList;
-
     public StoreAdapter(Context context, List<Piece> pieceArrayList) {
         this.context = context;
         this.pieceArrayList = pieceArrayList;
+    }
+
+    public StoreAdapter(Context context) {
+        this.context = context;
+    }
+
+    public List<Piece> getPieceArrayList() {
+        return pieceArrayList;
     }
 
     @NonNull
@@ -53,6 +61,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.viewholder> 
     @Override
     public int getItemCount() {
         return pieceArrayList.size();
+    }
+
+
+    public void updatePiecesList(final List<Piece> userArrayList) {
+        this.pieceArrayList.clear();
+        this.pieceArrayList = userArrayList;
+        notifyDataSetChanged();
     }
 
     public class viewholder extends RecyclerView.ViewHolder {

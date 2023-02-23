@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import com.example.ecbabywear.CartAdapter;
+import com.example.ecbabywear.Model.Piece;
+import com.example.ecbabywear.PiecesViewModel;
 import com.example.ecbabywear.R;
+
+import java.util.ArrayList;
 
 public class Cart extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -20,7 +24,7 @@ public class Cart extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.cart_recview);
 
-        recyclerView.setAdapter(new CartAdapter(this, cart,1));
+        recyclerView.setAdapter(new CartAdapter(this, (ArrayList<Piece>) PiecesViewModel.pieceList,1));
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
     }
 }

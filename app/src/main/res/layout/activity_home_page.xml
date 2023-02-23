@@ -167,7 +167,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
                 tools:itemCount="8"
-                tools:listitem="@layout/store_item" />
+                tools:listitem="@layout/store_item"/>
 
             <ImageView
                 android:id="@+id/img_noData"
