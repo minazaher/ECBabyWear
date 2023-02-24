@@ -56,26 +56,20 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
 
         initRecView();
 
-        fab_cart.setOnClickListener(view -> {
+        fab_cart.setOnClickListener((View view) -> {
          Intent intent = new Intent(HomePage.this, Cart.class);
          startActivity(intent);});
 
-        btn_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomePage.this, Requests.class);
-                startActivity(intent);
-            }
+        btn_profile.setOnClickListener(view -> {
+            Intent intent = new Intent(HomePage.this, Requests.class);
+            startActivity(intent);
         });
 
-        btn_swap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                noData = findViewById(R.id.img_noData);
-                recyclerView.setVisibility(View.GONE);
-                noData.setVisibility(View.VISIBLE);
-                fab_cart.setImageResource(R.drawable.ic_baseline_post_add_24);
-            }
+        btn_swap.setOnClickListener(view -> {
+            noData = findViewById(R.id.img_noData);
+            recyclerView.setVisibility(View.GONE);
+            noData.setVisibility(View.VISIBLE);
+            fab_cart.setImageResource(R.drawable.ic_baseline_post_add_24);
         });
 
     }
@@ -87,7 +81,7 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        StoreAdapter storeAdapter = new StoreAdapter(this, PiecesViewModel.pieceList);
+        StoreAdapter storeAdapter = new StoreAdapter(this, ApplicationClass.FinalPieces);
 
         piecesViewModel = ViewModelProviders.of(this).get(PiecesViewModel.class);
         piecesViewModel.getLivePiecesData().observe(this, new Observer<List<Piece>>() {
@@ -97,26 +91,13 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
             }
         });
 
-
         recyclerView.setAdapter(storeAdapter);
         System.out.println("ITEMS : " + PiecesViewModel.pieceList.toString());
         recyclerView.setVisibility(View.VISIBLE);
     }
 
 
-//    private void initalizeRecView(){
-//         PiecesViewModel piecesViewModel= new ViewModelProvider(this).get(PiecesViewModel.class);
-//         piecesViewModel.getLivePiecesData().observe(this, pieces -> {
-//            StoreAdapter storeAdapter = new StoreAdapter(this, pieces);
-//            recyclerView.setVisibility(View.VISIBLE);
-//        });
-//
-//    }
-//
-//    private MutableLiveData<List<Piece>> getPieces(){
-//        MutableLiveData<List<Piece>> piecesLiveData;
-//        PiecesViewModel piecesViewModel = new PiecesViewModel();
-//        piecesLiveData = piecesViewModel.getLivePiecesData();
-//        return piecesLiveData;
-//    }
+
 }
+
+
