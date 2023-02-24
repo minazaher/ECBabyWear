@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ecbabywear.R;
@@ -20,8 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SignIn extends AppCompatActivity {
     Button SignIn;
+    TextView Register, ForgetPassword;
     EditText Email, Password;
     FirebaseAuth mAuth;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +36,21 @@ public class SignIn extends AppCompatActivity {
         SignIn = findViewById(R.id.btn_signIn);
         Email = findViewById(R.id.et_email_signin);
         Password = findViewById(R.id.et_password_signin);
+        Register = findViewById(R.id.tv_registerHere);
         mAuth = FirebaseAuth.getInstance();
+        ForgetPassword = findViewById(R.id.tv_forgot_password);
 
+
+        ForgetPassword.setOnClickListener(view -> {
+            assert (!TextUtils.isEmpty(Email.getText().toString()));
+            mAuth.sendPasswordResetEmail( Email.getText().toString());
+        });
+
+
+        Register.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), SignUp.class));
+            finish();
+        });
 
         SignIn.setOnClickListener(view -> {
             String CurrentEmail = Email.getText().toString();
@@ -61,7 +79,6 @@ public class SignIn extends AppCompatActivity {
                         Toast.makeText(SignIn.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                 }
             });
-
         });
 
     }
