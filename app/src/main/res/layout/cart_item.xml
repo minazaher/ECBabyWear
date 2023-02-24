@@ -77,10 +77,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:layout_marginTop="5dp"
                 android:paddingEnd="15dp">
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_plus_cart"
                         android:layout_width="35dp"
                         android:layout_height="40dp"
                         android:backgroundTint="@color/pink_300"
@@ -96,6 +96,7 @@
                         android:textSize="18sp"/>
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_minus_cart"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:backgroundTint="@color/pink_300"

@@ -180,6 +180,7 @@
             app:layout_constraintVertical_bias="0.106">
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_plus_item"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/pink_300"
@@ -188,12 +189,14 @@
                 android:textColor="@color/white" />
 
             <TextView
+                android:id="@+id/tv_details_itemCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:text="1" />
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_minus_item"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/pink_300"
@@ -228,6 +231,7 @@
             app:layout_constraintGuide_begin="419dp" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_to_cart"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginHorizontal="50dp"

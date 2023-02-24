@@ -3,6 +3,7 @@ package com.example.ecbabywear.UI.HomePage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -15,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -43,6 +47,8 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
     ImageView noData;
     MutableLiveData<List<Piece>> ceList ;
     PiecesViewModel piecesViewModel;
+    ConstraintLayout trans;
+    Animation animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +58,7 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         fab_cart = findViewById(R.id.fab_cart);
         btn_profile = findViewById(R.id.btn_profile);
         btn_swap = findViewById(R.id.btn_swap);
-
-
+        animation = AnimationUtils.loadAnimation(this, R.anim.transation_anim);
         initRecView();
 
         fab_cart.setOnClickListener((View view) -> {
@@ -66,6 +71,7 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         });
 
         btn_swap.setOnClickListener(view -> {
+            trans.startAnimation(animation);
             noData = findViewById(R.id.img_noData);
             recyclerView.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);
@@ -84,12 +90,7 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         StoreAdapter storeAdapter = new StoreAdapter(this, ApplicationClass.FinalPieces);
 
         piecesViewModel = ViewModelProviders.of(this).get(PiecesViewModel.class);
-        piecesViewModel.getLivePiecesData().observe(this, new Observer<List<Piece>>() {
-            @Override
-            public void onChanged(List<Piece> pieces) {
-                storeAdapter.updatePiecesList(pieces);
-            }
-        });
+        piecesViewModel.getLivePiecesData().observe(this, pieces -> storeAdapter.updatePiecesList(pieces));
 
         recyclerView.setAdapter(storeAdapter);
         System.out.println("ITEMS : " + PiecesViewModel.pieceList.toString());
