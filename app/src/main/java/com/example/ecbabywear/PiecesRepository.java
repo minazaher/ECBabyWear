@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -38,9 +39,17 @@ public class PiecesRepository {
     public PiecesRepository() {
         this.pieceListMutableLiveData = new MutableLiveData<>();
         //define firestore
+
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Pieces");
+        FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
+
         //define bloglist
         pieceMutableLiveData = new MutableLiveData<>();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        firebaseFirestore.setFirestoreSettings(settings);
     }
 
     public MutableLiveData<List<Piece>> getPieceMutableLiveData() {
@@ -64,5 +73,7 @@ public class PiecesRepository {
         return pieceListMutableLiveData;
 
     }
+
+
 
 }

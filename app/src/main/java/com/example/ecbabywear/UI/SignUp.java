@@ -81,17 +81,14 @@ public class SignUp extends AppCompatActivity {
                 }
 
 
-                mAuth.createUserWithEmailAndPassword(CurrentEmail, CurrentPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(SignUp.this, "User Created!", Toast.LENGTH_SHORT).show();
-                            GoToSignIn();
-                        }
-                        else
-                            Toast.makeText(SignUp.this, "Failed! Try Again Later", Toast.LENGTH_SHORT).show();
-
+                mAuth.createUserWithEmailAndPassword(CurrentEmail, CurrentPassword).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        Toast.makeText(SignUp.this, "User Created!", Toast.LENGTH_SHORT).show();
+                        GoToSignIn();
                     }
+                    else
+                        System.out.println();
+                        Toast.makeText(SignUp.this, "Failed! Try Again Later", Toast.LENGTH_SHORT).show();
                 });
             }
         });

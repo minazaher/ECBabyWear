@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,8 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         animation = AnimationUtils.loadAnimation(this, R.anim.transation_anim);
         initRecView();
 
+
+
         fab_cart.setOnClickListener((View view) -> {
          Intent intent = new Intent(HomePage.this, Cart.class);
          startActivity(intent);});
@@ -71,7 +74,6 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         });
 
         btn_swap.setOnClickListener(view -> {
-            trans.startAnimation(animation);
             noData = findViewById(R.id.img_noData);
             recyclerView.setVisibility(View.GONE);
             noData.setVisibility(View.VISIBLE);

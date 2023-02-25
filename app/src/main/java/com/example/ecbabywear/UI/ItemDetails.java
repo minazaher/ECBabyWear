@@ -22,6 +22,7 @@ public class ItemDetails extends AppCompatActivity {
     ImageView img;
     AppCompatButton Add, Drop, AddToCart;
     int C = 1;
+    Double price;
     @Override
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +42,23 @@ public class ItemDetails extends AppCompatActivity {
         C = Integer.parseInt(Count.getText().toString());
         Name.setText(currentPiece.getName());
         Descripition.setText(currentPiece.getLongDescription());
-        Price.setText(currentPiece.getPrice());
+        Price.setText(currentPiece.getPrice() + " L.E");
         Glide.with(this).asBitmap().load(currentPiece.getURL()).into(img);
 
 
         Add.setOnClickListener(view -> {
             C += 1;
             Count.setText(String.valueOf(C));
-            Price.setText(Double.parseDouble(currentPiece.getPrice()) * C+ " L.E");
+            price = Double.parseDouble(currentPiece.getPrice()) * C;
+            Price.setText( price.toString()  +" L.E");
         });
 
         Drop.setOnClickListener(view -> {
             if (C != 0) {
                 C-=1;
                 Count.setText(String.valueOf(C));
-                Price.setText(Double.parseDouble(currentPiece.getPrice()) *C +" L.E");
-            }
-
+                price = Double.parseDouble(currentPiece.getPrice()) * C;
+                Price.setText( price.toString()  +" L.E");            }
         });
 
 
