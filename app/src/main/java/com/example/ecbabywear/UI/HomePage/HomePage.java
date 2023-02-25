@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -60,6 +62,8 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         btn_profile = findViewById(R.id.btn_profile);
         btn_swap = findViewById(R.id.btn_swap);
         animation = AnimationUtils.loadAnimation(this, R.anim.transation_anim);
+
+
         initRecView();
 
 
@@ -86,7 +90,15 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
 
     private void initRecView() {
         recyclerView = findViewById(R.id.store_recview);
+        Display display = getWindowManager(). getDefaultDisplay();
+        Point size = new Point();
+        display. getSize(size);
+        int width = size.x;
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
+        if (width  == 1600){
+                gridLayoutManager.setSpanCount(4);
+        }
         recyclerView.setLayoutManager(gridLayoutManager);
 
         StoreAdapter storeAdapter = new StoreAdapter(this, ApplicationClass.FinalPieces);
