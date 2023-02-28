@@ -3,23 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_home"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home"
+        android:id="@+id/menu_wishlist"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="My Wishlist"
         app:showAsAction="always" />
     <item
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search"
+        android:icon="@drawable/ic_baseline_payments_24"
+        android:title="My Wallet"
         app:showAsAction="
 always"/>
     <item
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search"
-        app:showAsAction="
-always" />
+        android:icon="@drawable/ic_baseline_shopping_bag_24"
+        android:title="My Orders"
+        app:showAsAction="always" />
     <item
         android:id="@+id/menu_search"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="Search"
+        android:icon="@drawable/ic_baseline_text_snippet_24"
+        android:title="About Us"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_policy"
+        android:icon="@drawable/ic_baseline_lock_24"
+        android:title="Privacy Policy"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Setting"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/menu_logout"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="Log out"
+        android:iconTintMode="add"
         app:showAsAction="always" />
 </menu>

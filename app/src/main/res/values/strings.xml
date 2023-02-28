@@ -28,4 +28,6 @@
     <string name="forgot_your_password">forgot your password?</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit strud exercitation ullamco laboris nisi ut aliquip ex ea commod ullamco.</string>
     <string name="piece_nam">Newborn bodysuit</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 </resources>

@@ -2,8 +2,11 @@ package com.example.ecbabywear.UI.HomePage;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -17,6 +20,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -32,6 +36,7 @@ import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.Cart;
 import com.example.ecbabywear.UI.Requests;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,7 +55,11 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
     ImageView noData;
     MutableLiveData<List<Piece>> ceList ;
     PiecesViewModel piecesViewModel;
+    Toolbar toolbar;
+    NavigationView navigationView;
     ConstraintLayout trans;
+    public DrawerLayout drawerLayout;
+    public ActionBarDrawerToggle actionBarDrawerToggle;
     Animation animation;
 
     @Override
@@ -61,7 +70,19 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         fab_cart = findViewById(R.id.fab_cart);
         btn_profile = findViewById(R.id.btn_profile);
         btn_swap = findViewById(R.id.btn_swap);
-        animation = AnimationUtils.loadAnimation(this, R.anim.transation_anim);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        toolbar= findViewById(R.id.toolbar);
+        navigationView = findViewById(R.id.nav_view);
+
+        setSupportActionBar(toolbar);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.nav_open, R.string.nav_close);
+
+        // pass the Open and Close toggle for the drawer layout listener
+        // to toggle the button
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
 
         initRecView();
@@ -84,6 +105,16 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
             fab_cart.setImageResource(R.drawable.ic_baseline_post_add_24);
         });
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -125,13 +125,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
+
+                <TextView
+                    android:id="@+id/tv_categories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:text="Popular"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foregroundGravity="fill_horizontal"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="1"
+                    android:orientation="horizontal"
+                    tools:itemCount="8"
+                    tools:listitem="@layout/category_item" />
+
+
                 <TextView
                     android:id="@+id/tv_popular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     android:fontFamily="@font/poppinssemibold"
-                    android:text="Popular"
+                    android:text="New Arrival"
                     android:textColor="@color/black"
                     android:textSize="18dp" />
 
