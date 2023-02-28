@@ -253,10 +253,8 @@
             android:padding="3dp"
             app:fabAlignmentMode="end"
             android:animateLayoutChanges="true"
-            app:fabAlignmentModeEndMargin="15dp"
             app:fabCradleMargin="10dp"
             app:fabAnimationMode="scale"
-            app:popupTheme=""
             app:fabCradleRoundedCornerRadius="50dp"
             app:fabCradleVerticalOffset="8dp">
 
@@ -343,6 +341,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
+                    android:layout_marginEnd="3dp"
                     android:orientation="vertical">
 
                     <ImageView
