@@ -27,7 +27,6 @@ public class SignUp extends AppCompatActivity {
     TextView SignIn;
     EditText Name, Email, Password, ConfirmPassword;
     FirebaseAuth mAuth;
-    boolean valid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,6 @@ public class SignUp extends AppCompatActivity {
         SignIn = findViewById(R.id.tv_signInHere);
         ConfirmPassword = findViewById(R.id.et_password_signup_c);
         mAuth = FirebaseAuth.getInstance();
-        valid = false;
 
 //
 //        if (mAuth.getCurrentUser() != null){
@@ -86,9 +84,9 @@ public class SignUp extends AppCompatActivity {
                         Toast.makeText(SignUp.this, "User Created!", Toast.LENGTH_SHORT).show();
                         GoToSignIn();
                     }
-                    else
-                        System.out.println();
+                    else{
                         Toast.makeText(SignUp.this, "Failed! Try Again Later", Toast.LENGTH_SHORT).show();
+                    }
                 });
             }
         });

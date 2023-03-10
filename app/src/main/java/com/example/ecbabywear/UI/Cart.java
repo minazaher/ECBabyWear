@@ -12,28 +12,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.CartAdapter;
-import com.example.ecbabywear.Model.Piece;
-import com.example.ecbabywear.PiecesViewModel;
 import com.example.ecbabywear.R;
+import com.example.ecbabywear.UI.HomePage.CategoriesAdapter;
 import com.example.ecbabywear.UI.HomePage.HomePage;
-
-import java.util.ArrayList;
+import com.example.ecbabywear.databinding.ActivityCartBinding;
 
 public class Cart extends AppCompatActivity {
-    RecyclerView recyclerView;
-    AppCompatButton Checkout;
+    ActivityCartBinding activityCartBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
+        setContentView(activityCartBinding.getRoot());
 
 
-        recyclerView = findViewById(R.id.cart_recview);
-        Checkout = findViewById(R.id.btn_checkout);
 
-
-        Checkout.setOnClickListener(new View.OnClickListener() {
+        activityCartBinding.btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), HomePage.class));
@@ -41,8 +37,9 @@ public class Cart extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Checkout Done Sucessfully", Toast.LENGTH_SHORT).show();
             }
         });
-        recyclerView.setAdapter(new CartAdapter(this, cart,1));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        activityCartBinding.cartRecview.setAdapter(new CartAdapter(getApplicationContext(), cart, 1));
+        activityCartBinding.cartRecview.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
 
 

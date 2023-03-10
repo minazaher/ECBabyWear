@@ -6,6 +6,11 @@ plugins {
 android {
     namespace 'com.example.ecbabywear'
     compileSdk 33
+    
+        buildFeatures {
+            viewBinding true
+        }
+
 
     defaultConfig {
         applicationId "com.example.ecbabywear"

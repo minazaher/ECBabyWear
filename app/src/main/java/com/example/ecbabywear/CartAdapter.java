@@ -16,25 +16,26 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Piece;
 
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
     private Context context;
-    private ArrayList<Piece> pieceArrayList;
+    private ArrayList<CartItem> CartPieces;
     private int contextBit;
 
-    public CartAdapter(Context context, ArrayList<Piece> pieceArrayList, int contextBit) {
+
+    public CartAdapter(Context context, ArrayList<CartItem> cartPieces, int contextBit) {
         this.context = context;
-        this.pieceArrayList = pieceArrayList;
+        CartPieces = cartPieces;
         this.contextBit = contextBit;
     }
 
     @NonNull
     @Override
     public mViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false);
         return new mViewHolder(inflate);
     }
@@ -42,11 +43,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
     @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull mViewHolder holder, int position) {
-
-        holder.tv_Name.setText(pieceArrayList.get(position).getName().toString());
-        holder.tv_ShortDescription.setText(pieceArrayList.get(position).getShortDescription().toString());
-        holder.tv_Stat.setText(pieceArrayList.get(position).getStatus().toString());
-        Glide.with(context).asBitmap().load(pieceArrayList.get(position).getURL()).into(holder.img);
+        Double price = Double.parseDouble(CartPieces.get(position).getPrice()) * CartPieces.get(position).getItemQuantity();
+        holder.tv_Name.setText(CartPieces.get(position).getName().toString());
+        holder.tv_ShortDescription.setText(CartPieces.get(position).getShortDescription().toString());
+        holder.tv_Stat.setText(CartPieces.get(position).getStatus().toString());
+        holder.tv_cart_itemPrice.setText(price.toString());
+        holder.tv_item_quantity.setText(String.valueOf(CartPieces.get(position).getItemQuantity()));
+        Glide.with(context).asBitmap().load(CartPieces.get(position).getURL()).into(holder.img);
 
         if ( this.contextBit == 1)
         {
@@ -59,7 +62,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
             holder.cart.setVisibility(View.GONE);
         }
 
-
         if (holder.getAdapterPosition() % 2 != 0)
             holder.tv_Stat.setTextColor(Color.RED);
         else
@@ -68,12 +70,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
 
     @Override
     public int getItemCount() {
-        return pieceArrayList.size();
+        return CartPieces.size();
     }
 
     public class mViewHolder extends RecyclerView.ViewHolder{
         ImageView img;
-        TextView tv_Name, tv_Stat, tv_ShortDescription;
+        TextView tv_Name, tv_Stat, tv_ShortDescription, tv_item_quantity, tv_cart_itemPrice;
         LinearLayout cart;
         @SuppressLint("ResourceAsColor")
         public mViewHolder(@NonNull View itemView) {
@@ -81,7 +83,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
             img = itemView.findViewById(R.id.img_cart);
             tv_Name = itemView.findViewById(R.id.tv_cart_itemName);
             tv_Stat = itemView.findViewById(R.id.tv_request_itemStat);
+            tv_cart_itemPrice = itemView.findViewById(R.id.tv_cart_itemPrice);
             tv_ShortDescription = itemView.findViewById(R.id.tv_cart_itemDes);
+            tv_item_quantity = itemView.findViewById(R.id.cat_item_quantity);
             cart = itemView.findViewById(R.id.cart_linearlayout);
         }
     }

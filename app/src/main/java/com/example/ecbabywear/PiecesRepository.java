@@ -38,13 +38,8 @@ public class PiecesRepository {
 
     public PiecesRepository() {
         this.pieceListMutableLiveData = new MutableLiveData<>();
-        //define firestore
-
-
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Pieces");
         FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
-
-        //define bloglist
         pieceMutableLiveData = new MutableLiveData<>();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
@@ -69,11 +64,8 @@ public class PiecesRepository {
                 System.out.println("System Problem");
             }
         });
-
         return pieceListMutableLiveData;
 
     }
-
-
 
 }

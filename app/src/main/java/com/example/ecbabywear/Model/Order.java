@@ -5,24 +5,19 @@ import com.google.type.DateTime;
 import java.util.ArrayList;
 
 public class Order {
-    private String UserID;
+    private String OrderID;
     private ArrayList<Piece> OrderPieces;
     private DateTime OrderDate;
     private String TotalPrice;
 
-    public Order(String userID, ArrayList<Piece> orderPieces, DateTime orderDate, String totalPrice) {
-        UserID = userID;
+    public Order() {
+    }
+
+    public Order(String orderID, ArrayList<Piece> orderPieces, DateTime orderDate, String totalPrice) {
+        OrderID = orderID;
         OrderPieces = orderPieces;
         OrderDate = orderDate;
         TotalPrice = totalPrice;
-    }
-
-    public String getUserID() {
-        return UserID;
-    }
-
-    public void setUserID(String userID) {
-        UserID = userID;
     }
 
     public ArrayList<Piece> getOrderPieces() {
@@ -52,7 +47,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "UserID='" + UserID + '\'' +
+                "OrderID='" + OrderID + '\'' +
                 ", OrderPieces=" + OrderPieces +
                 ", OrderDate=" + OrderDate +
                 ", TotalPrice='" + TotalPrice + '\'' +

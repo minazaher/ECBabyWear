@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/store_img"
+                android:id="@+id/cat_img"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1.5"
@@ -27,6 +27,7 @@
                 android:maxHeight="120dp"
                 android:src="@drawable/category" />
         <TextView
+            android:id="@+id/cat_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Suit"

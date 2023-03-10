@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
-    android:id="@+id/drawer_layout"
-    tools:openDrawer="start">
+    android:fitsSystemWindows="false"
+    tools:actionBarNavMode="tabs"
+    android:id="@+id/drawer_layout">
 
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/navbar_menu"
@@ -18,6 +19,7 @@
         app:topInsetScrimEnabled="true"
         app:itemIconTint="@color/pink_300"
         android:background="@drawable/et_grey"
+        android:fitsSystemWindows="false"
         android:elevation="60dp"/>
 
     <RelativeLayout
@@ -34,6 +36,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="40dp"
@@ -42,7 +46,6 @@
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 android:layout_marginHorizontal="10dp"
-                android:layout_alignParentTop="true"
                 app:navigationIcon="@drawable/ic_baseline_menu_open_24"/>
 
 
@@ -70,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/coordinatorLayout"
-            android:layout_below="@+id/top_search" android:layout_marginBottom="-109dp"
+            android:layout_below="@+id/top_search"
             android:foregroundGravity="center_horizontal"
             android:paddingHorizontal="10dp"
             android:scrollbarAlwaysDrawVerticalTrack="false"
@@ -81,7 +84,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
@@ -174,11 +177,12 @@
                         android:layout_marginVertical="10dp"
                         android:fontFamily="@font/poppinssemibold"
                         android:text="Categories"
+                        android:layout_marginStart="10dp"
                         android:textColor="@color/black"
                         android:textSize="18dp" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/cats"
+                        android:id="@+id/cats_recview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:foregroundGravity="fill_horizontal"
@@ -197,6 +201,7 @@
                         android:layout_marginVertical="10dp"
                         android:fontFamily="@font/poppinssemibold"
                         android:text="New Arrivals"
+                        android:layout_marginStart="10dp"
                         android:textColor="@color/black"
                         android:textSize="18dp" />
 
@@ -204,10 +209,11 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/store_recview"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:foregroundGravity="fill_horizontal"
                         android:visibility="visible"
+                        android:isScrollContainer="false"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="2"
                         tools:itemCount="16"
@@ -232,7 +238,9 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinatorLayout"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="95dp"
+            android:background="@drawable/transparent_background"
+            app:statusBarBackground="@drawable/transparent_background"
             android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -241,153 +249,30 @@
             <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bottom_app_bar"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:backgroundTint="#f6f6f6"
                 android:gravity="bottom"
+                app:fabAlignmentMode="end"
                 android:padding="3dp"
                 app:fabCradleMargin="10dp"
+                android:background="@drawable/transparent_background"
                 app:fabCradleRoundedCornerRadius="12dp"
                 app:fabCradleVerticalOffset="4dp">
 
-                <LinearLayout
+                <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/transparent_background"
+                    app:menu="@menu/bottom_menu"/>
 
-                    <LinearLayout
-                        android:id="@+id/btn_home"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2"
-                        android:background="@drawable/top_page_bg"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_baseline_home_24"
-                            app:tint="@color/white" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Home"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/btn_swap"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_outline_swap_vert_24" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Swap"
-                            android:textAlignment="center"
-                            android:textColor="#676767"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/img3"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:visibility="invisible"
-                            app:srcCompat="@drawable/splash_2" />
-
-                        <TextView
-                            android:id="@+id/tv_3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAlignment="center"
-                            android:textColor="#676767"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/btn_profile"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/img4"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_baseline_sticky_note_2_24"
-                            tools:ignore="NestedWeights" />
-
-                        <TextView
-                            android:id="@+id/help"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Requests"
-                            android:textAlignment="center"
-                            android:textColor="#676767"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/btn_setting"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.2"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imageView5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_baseline_settings_24" />
-
-                        <TextView
-                            android:id="@+id/textView12"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="Setting"
-                            android:textAlignment="center"
-                            android:textColor="#676767"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
             </com.google.android.material.bottomappbar.BottomAppBar>
 
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_cart"
-                android:layout_width="50000dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="#497"

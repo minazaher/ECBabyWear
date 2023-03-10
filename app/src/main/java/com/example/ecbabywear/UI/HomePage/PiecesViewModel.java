@@ -1,9 +1,10 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI.HomePage;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ecbabywear.Model.Piece;
+import com.example.ecbabywear.PiecesRepository;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,7 +23,6 @@ public class PiecesViewModel extends ViewModel {
         pieceListMutableLiveData = new MutableLiveData<>();
         pieceListMutableLiveData = piecesRepository.getPieceMutableLiveData();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Pieces");
-
         init();
     }
 

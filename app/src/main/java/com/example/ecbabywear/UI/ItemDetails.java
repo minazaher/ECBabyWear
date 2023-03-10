@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.R;
 
 public class ItemDetails extends AppCompatActivity {
@@ -38,7 +39,6 @@ public class ItemDetails extends AppCompatActivity {
         Drop = findViewById(R.id.btn_minus_item);
         AddToCart = findViewById(R.id.btn_add_to_cart);
 
-
         C = Integer.parseInt(Count.getText().toString());
         Name.setText(currentPiece.getName());
         Descripition.setText(currentPiece.getLongDescription());
@@ -61,11 +61,9 @@ public class ItemDetails extends AppCompatActivity {
                 Price.setText( price.toString()  +" L.E");            }
         });
 
-
         AddToCart.setOnClickListener(view -> {
-            for (int i = 0 ; i <C ; i++){
-                cart.add(currentPiece);
-            }
+            CartItem cartItem = new CartItem(currentPiece, C);
+            cart.add(cartItem);
             Toast.makeText(this, "Added Successfully!", Toast.LENGTH_SHORT).show();
         });
     }

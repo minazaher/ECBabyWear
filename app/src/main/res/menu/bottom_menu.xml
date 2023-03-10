@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bot_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bot_swap"
+        android:icon="@drawable/ic_outline_swap_vert_24"
+        android:title="Swap"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/bot_requests"
+        android:icon="@drawable/ic_baseline_sticky_note_2_24"
+        android:title="Requests"
+        app:showAsAction="always" />
+    <item
+
+        android:id="@+id/bot_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Settings"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bot_placeholder"
+        android:title="" />
+</menu>
