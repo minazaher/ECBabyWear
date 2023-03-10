@@ -47,7 +47,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
         holder.tv_Name.setText(CartPieces.get(position).getName().toString());
         holder.tv_ShortDescription.setText(CartPieces.get(position).getShortDescription().toString());
         holder.tv_Stat.setText(CartPieces.get(position).getStatus().toString());
-        holder.tv_cart_itemPrice.setText(price.toString());
+        holder.tv_cart_itemPrice.setText(price.toString() + " L.E");
         holder.tv_item_quantity.setText(String.valueOf(CartPieces.get(position).getItemQuantity()));
         Glide.with(context).asBitmap().load(CartPieces.get(position).getURL()).into(holder.img);
 

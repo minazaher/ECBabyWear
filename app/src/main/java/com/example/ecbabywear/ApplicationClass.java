@@ -1,6 +1,8 @@
 package com.example.ecbabywear;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Piece;
@@ -41,6 +43,13 @@ public class ApplicationClass extends Application {
 //
 
 
+    }
+
+    public static void restartActivity(Activity act){
+        Intent intent=new Intent();
+        intent.setClass(act, act.getClass());
+        act.finish();
+        act.startActivity(intent);
     }
 
 

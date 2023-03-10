@@ -1,38 +1,30 @@
 package com.example.ecbabywear.Model;
 
-import com.google.type.DateTime;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Order {
     private String OrderID;
-    private ArrayList<Piece> OrderPieces;
-    private DateTime OrderDate;
+    private ArrayList<CartItem> Items;
+    private LocalDate OrderDate;
     private String TotalPrice;
 
     public Order() {
     }
 
-    public Order(String orderID, ArrayList<Piece> orderPieces, DateTime orderDate, String totalPrice) {
+    public Order(String orderID, ArrayList<CartItem> items, LocalDate orderDate, String totalPrice) {
         OrderID = orderID;
-        OrderPieces = orderPieces;
+        Items = items;
         OrderDate = orderDate;
         TotalPrice = totalPrice;
     }
 
-    public ArrayList<Piece> getOrderPieces() {
-        return OrderPieces;
-    }
 
-    public void setOrderPieces(ArrayList<Piece> orderPieces) {
-        OrderPieces = orderPieces;
-    }
-
-    public DateTime getOrderDate() {
+    public LocalDate getOrderDate() {
         return OrderDate;
     }
 
-    public void setOrderDate(DateTime orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         OrderDate = orderDate;
     }
 
@@ -48,7 +40,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "OrderID='" + OrderID + '\'' +
-                ", OrderPieces=" + OrderPieces +
+                ", OrderPieces=" + Items +
                 ", OrderDate=" + OrderDate +
                 ", TotalPrice='" + TotalPrice + '\'' +
                 '}';
