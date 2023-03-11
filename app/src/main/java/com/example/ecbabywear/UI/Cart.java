@@ -3,6 +3,7 @@ package com.example.ecbabywear.UI;
 import static com.example.ecbabywear.ApplicationClass.cart;
 import static com.example.ecbabywear.ApplicationClass.restartActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ecbabywear.ApplicationClass;
@@ -24,32 +26,57 @@ import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.HomePage.CategoriesAdapter;
 import com.example.ecbabywear.UI.HomePage.HomePage;
 import com.example.ecbabywear.databinding.ActivityCartBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Cart extends AppCompatActivity {
     ActivityCartBinding activityCartBinding;
     Double ItemPrice  , TotalPriceBeforeTaxes = 0.0, Taxes , DeliveryServices = 20.0, Total = 0.0;
     DecimalFormat df = new DecimalFormat("0.00");
-
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth firebaseAuth;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
         setContentView(activityCartBinding.getRoot());
+        if (cart.size() == 0) {
+            activityCartBinding.emptyLayout.setVisibility(View.VISIBLE);
+            activityCartBinding.cartLayout.setVisibility(View.GONE);
+        }
+        else{
+            activityCartBinding.emptyLayout.setVisibility(View.GONE);
+            activityCartBinding.cartLayout.setVisibility(View.VISIBLE);
+        }
 
         RecyclerView.Adapter adapter = new CartAdapter(getApplicationContext(), cart, 1);
-
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         activityCartBinding.cartRecview.setAdapter(adapter);
-        activityCartBinding.cartRecview.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        activityCartBinding.cartRecview.setLayoutManager(linearLayoutManager);
 
         for (CartItem c:cart) {
             ItemPrice = Double.parseDouble(c.getPrice()) * c.getItemQuantity();
             TotalPriceBeforeTaxes += ItemPrice;
         }
-
 
         Taxes = Double.valueOf(df.format(0.14 * TotalPriceBeforeTaxes));
         activityCartBinding.itemsTotalPrice.setText(TotalPriceBeforeTaxes.toString() + " L.E");
@@ -57,20 +84,54 @@ public class Cart extends AppCompatActivity {
         activityCartBinding.TotalPrice.setText(Total.toString() + " L.E");
         activityCartBinding.Tax.setText(Taxes.toString() + " L.E");
 
+
         activityCartBinding.btnCheckout.setOnClickListener(view -> {
-            Order order = new Order("ord1", cart, java.time.LocalDate.now(), Total.toString());
-            Toast.makeText(getApplicationContext(), "Checkout Done Sucessfully at "+ order.getOrderDate()  , Toast.LENGTH_SHORT).show();
+            Order order = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                order = new Order("ord1", cart, java.time.LocalDate.now(), Total.toString());
+            }
+            addOrderToDatabase(order);
             startActivity(new Intent(getApplicationContext(), HomePage.class));
             cart.clear();
         });
-
-
+        getAllOrders(firebaseAuth.getCurrentUser().getUid());
         activityCartBinding.btnClear.setOnClickListener(view ->
                 Snackbar.make(findViewById(R.id.activity_cart), "The Cart Items Will be Deleted", Snackbar.LENGTH_LONG)
                 .setAction("Clear", view1 -> {
                     cart.clear();
                     restartActivity(Cart.this);
                 }).setBackgroundTint(getColor(R.color.pink_300)).setTextColor(Color.WHITE).setActionTextColor(Color.WHITE).show());
+    }
+
+
+    public void addOrderToDatabase(Order order){
+        Map<String, Object> myOrder = new HashMap<>();
+        DocumentReference documentReference = firebaseFirestore.collection("Orders").document();
+        myOrder.put("OrderID", firebaseAuth.getCurrentUser().getUid());
+        myOrder.put("OrderItems", order.getItems());
+        myOrder.put("OrderPrice", order.getTotalPrice());
+
+        documentReference.set(myOrder).
+                addOnSuccessListener(unused ->
+                Toast.makeText(Cart.this, "Order Done!", Toast.LENGTH_SHORT).show()).
+                addOnFailureListener(e ->
+                Toast.makeText(Cart.this, "Fuck OFF!", Toast.LENGTH_SHORT).show());
+
+    }
+
+    public void getAllOrders(String UserID){
+        firebaseFirestore.collection("Orders")
+                .whereEqualTo("OrderID",firebaseAuth.getCurrentUser().getUid() )
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            System.out.println("Order : ****** " +  document.get("OrderItems"));
+                        }
+                    } else {
+                        System.out.println("Error getting documents: " + task.getException());
+                    }
+                });
     }
 
 }

@@ -36,7 +36,8 @@ import java.util.List;
 public class HomePage extends AppCompatActivity implements LifecycleOwner {
 
     RecyclerView NewArrivals, Categories  ;
-    LinearLayout btn_profile, btn_swap;
+    LinearLayout btn_profile, btn_swap, linearLayout_recview;
+    ImageView img;
     FloatingActionButton fab_cart;
     ImageView noData;
     MutableLiveData<List<Piece>> ceList ;
@@ -55,8 +56,8 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
 
         fab_cart = findViewById(R.id.fab_cart);
         Categories = findViewById(R.id.cats_recview);
-
-
+        img = findViewById(R.id.img_noData);
+        linearLayout_recview = findViewById(R.id.linear_recView);
         drawerLayout = findViewById(R.id.drawer_layout);
         toolbar= findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
@@ -76,7 +77,11 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
 
         fab_cart.setOnClickListener((View view) -> {
          Intent intent = new Intent(HomePage.this, Cart.class);
-         startActivity(intent);});
+         startActivity(intent);
+        });
+
+
+
     }
 
 

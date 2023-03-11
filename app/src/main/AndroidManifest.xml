@@ -70,6 +70,7 @@
             android:name=".UI.SplashScreen"
             android:exported="true"
             android:colorMode="hdr">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
