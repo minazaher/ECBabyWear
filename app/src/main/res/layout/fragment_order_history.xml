@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".OrderHistoryFragment">
 
-    <TextView
-        android:id="@+id/myTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="50dp"
-        android:text="Orders" />
+ <androidx.recyclerview.widget.RecyclerView
+     android:id="@+id/orders_recylerview"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     tools:itemCount="10"
+     tools:listitem="@layout/order_item"/>
 
 </RelativeLayout>

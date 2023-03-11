@@ -3,27 +3,47 @@ package com.example.ecbabywear;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class FragmentAdapter extends FragmentStateAdapter {
-    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
-        super(fragmentManager, lifecycle);
+import java.util.ArrayList;
+import java.util.List;
+
+public class FragmentAdapter extends FragmentPagerAdapter {
+
+    private final List<Fragment> fragmentList = new ArrayList<>();
+    private final List<String> Titles = new ArrayList<>();
+
+
+    public FragmentAdapter(@NonNull FragmentManager fm) {
+        super(fm);
     }
 
     @NonNull
     @Override
-    public Fragment createFragment(int position) {
-        Fragment fragment = new OrderHistoryFragment();
-        Bundle args = new Bundle();
-        args.putString(OrderHistoryFragment.TITLE, "Tab " + (position+1));
-        return fragment;
+    public Fragment getItem(int position) {
+        return fragmentList.get(position);
     }
 
     @Override
-    public int getItemCount() {
-        return 3;
+    public int getCount() {
+        return 2;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return Titles.get(position);
+    }
+
+    public void addFragment(Fragment fragment, String title){
+        fragmentList.add(fragment);
+        Titles.add(title);
+
     }
 }

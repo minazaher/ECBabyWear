@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 
 import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.Piece;
+import com.example.ecbabywear.OrderHistory;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.Cart;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -61,7 +62,16 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         drawerLayout = findViewById(R.id.drawer_layout);
         toolbar= findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.nav_view);
+        trans = findViewById(R.id.constraintLayout);
 
+
+        trans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OrderHistory.class);
+                startActivity(intent);
+            }
+        });
         setSupportActionBar(toolbar);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.nav_open, R.string.nav_close);

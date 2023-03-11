@@ -8,6 +8,9 @@ public class CartItem extends Piece{
         this.itemQuantity = itemQuantity;
     }
 
+    public CartItem() {
+    }
+
     public CartItem(Piece piece, int itemQuantity) {
         this.setName(piece.getName());
         this.setPrice(piece.getPrice());

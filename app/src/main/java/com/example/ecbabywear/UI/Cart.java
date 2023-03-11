@@ -33,12 +33,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,8 +49,8 @@ public class Cart extends AppCompatActivity {
     ActivityCartBinding activityCartBinding;
     Double ItemPrice  , TotalPriceBeforeTaxes = 0.0, Taxes , DeliveryServices = 20.0, Total = 0.0;
     DecimalFormat df = new DecimalFormat("0.00");
-    FirebaseFirestore firebaseFirestore;
-    FirebaseAuth firebaseAuth;
+    static FirebaseFirestore firebaseFirestore;
+    static FirebaseAuth firebaseAuth;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +91,13 @@ public class Cart extends AppCompatActivity {
         activityCartBinding.btnCheckout.setOnClickListener(view -> {
             Order order = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                order = new Order("ord1", cart, java.time.LocalDate.now(), Total.toString());
+                order = new Order("ord1", cart, new Date() , Total.toString());
             }
             addOrderToDatabase(order);
             startActivity(new Intent(getApplicationContext(), HomePage.class));
             cart.clear();
         });
-        getAllOrders(firebaseAuth.getCurrentUser().getUid());
+        getAllOrders();
         activityCartBinding.btnClear.setOnClickListener(view ->
                 Snackbar.make(findViewById(R.id.activity_cart), "The Cart Items Will be Deleted", Snackbar.LENGTH_LONG)
                 .setAction("Clear", view1 -> {
@@ -107,31 +110,34 @@ public class Cart extends AppCompatActivity {
     public void addOrderToDatabase(Order order){
         Map<String, Object> myOrder = new HashMap<>();
         DocumentReference documentReference = firebaseFirestore.collection("Orders").document();
-        myOrder.put("OrderID", firebaseAuth.getCurrentUser().getUid());
-        myOrder.put("OrderItems", order.getItems());
-        myOrder.put("OrderPrice", order.getTotalPrice());
+        myOrder.put("orderID", firebaseAuth.getCurrentUser().getUid());
+        myOrder.put("items", order.getItems());
+        myOrder.put("orderDate",  FieldValue.serverTimestamp());
+        myOrder.put("totalPrice", order.getTotalPrice());
 
         documentReference.set(myOrder).
                 addOnSuccessListener(unused ->
                 Toast.makeText(Cart.this, "Order Done!", Toast.LENGTH_SHORT).show()).
                 addOnFailureListener(e ->
                 Toast.makeText(Cart.this, "Fuck OFF!", Toast.LENGTH_SHORT).show());
-
     }
 
-    public void getAllOrders(String UserID){
+    public static ArrayList<Order> getAllOrders(){
+        ArrayList<Order> orders = new ArrayList<>();
         firebaseFirestore.collection("Orders")
-                .whereEqualTo("OrderID",firebaseAuth.getCurrentUser().getUid() )
+                .whereEqualTo("orderID",firebaseAuth.getCurrentUser().getUid() )
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            System.out.println("Order : ****** " +  document.get("OrderItems"));
+                            System.out.println("Order : ****** " +  document.get("items"));
+                            orders.add(document.toObject(Order.class));
                         }
                     } else {
                         System.out.println("Error getting documents: " + task.getException());
                     }
                 });
+        return orders;
     }
 
 }
