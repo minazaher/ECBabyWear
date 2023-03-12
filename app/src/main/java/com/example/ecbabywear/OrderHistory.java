@@ -21,15 +21,16 @@ public class OrderHistory extends AppCompatActivity {
         setContentView(R.layout.activity_order_history);
 
 
+
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
 
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
         fragmentAdapter.addFragment(new OrderHistoryFragment(), "Completed");
-        fragmentAdapter.addFragment(new OrderHistoryFragment(), "Canceled");
-        viewPager.setAdapter(fragmentAdapter);
+        fragmentAdapter.addFragment(new CanceledOrderHistoryFragment(), "Cancelled");
 
+        viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
 

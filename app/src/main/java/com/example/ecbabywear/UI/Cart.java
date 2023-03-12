@@ -1,21 +1,21 @@
 package com.example.ecbabywear.UI;
 
+import static com.example.ecbabywear.ApplicationClass.Cancelled;
 import static com.example.ecbabywear.ApplicationClass.cart;
+import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
+import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
+import static com.example.ecbabywear.ApplicationClass.orders;
 import static com.example.ecbabywear.ApplicationClass.restartActivity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ecbabywear.ApplicationClass;
@@ -23,42 +23,36 @@ import com.example.ecbabywear.CartAdapter;
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
-import com.example.ecbabywear.UI.HomePage.CategoriesAdapter;
 import com.example.ecbabywear.UI.HomePage.HomePage;
 import com.example.ecbabywear.databinding.ActivityCartBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Cart extends AppCompatActivity {
     ActivityCartBinding activityCartBinding;
     Double ItemPrice  , TotalPriceBeforeTaxes = 0.0, Taxes , DeliveryServices = 20.0, Total = 0.0;
     DecimalFormat df = new DecimalFormat("0.00");
-    static FirebaseFirestore firebaseFirestore;
-    static FirebaseAuth firebaseAuth;
+    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT);
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
+
 
 
         setContentView(activityCartBinding.getRoot());
@@ -71,7 +65,7 @@ public class Cart extends AppCompatActivity {
             activityCartBinding.cartLayout.setVisibility(View.VISIBLE);
         }
 
-        RecyclerView.Adapter adapter = new CartAdapter(getApplicationContext(), cart, 1);
+        CartAdapter adapter = new CartAdapter(getApplicationContext(), cart, 1);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         activityCartBinding.cartRecview.setAdapter(adapter);
         activityCartBinding.cartRecview.setLayoutManager(linearLayoutManager);
@@ -91,19 +85,21 @@ public class Cart extends AppCompatActivity {
         activityCartBinding.btnCheckout.setOnClickListener(view -> {
             Order order = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                order = new Order("ord1", cart, new Date() , Total.toString());
+                String date = dateFormat.format(new Date());
+                order = new Order("ord1", cart, date , Total.toString(), "Completed");
+                orders.add(order);
             }
+            assert order != null;
             addOrderToDatabase(order);
             startActivity(new Intent(getApplicationContext(), HomePage.class));
-            cart.clear();
         });
-        getAllOrders();
+
         activityCartBinding.btnClear.setOnClickListener(view ->
                 Snackbar.make(findViewById(R.id.activity_cart), "The Cart Items Will be Deleted", Snackbar.LENGTH_LONG)
-                .setAction("Clear", view1 -> {
-                    cart.clear();
-                    restartActivity(Cart.this);
-                }).setBackgroundTint(getColor(R.color.pink_300)).setTextColor(Color.WHITE).setActionTextColor(Color.WHITE).show());
+                        .setAction("Clear", view1 -> {
+                            cart.clear();
+                            restartActivity(Cart.this);
+                        }).setBackgroundTint(getColor(R.color.pink_300)).setTextColor(Color.WHITE).setActionTextColor(Color.WHITE).show());
     }
 
 
@@ -112,32 +108,15 @@ public class Cart extends AppCompatActivity {
         DocumentReference documentReference = firebaseFirestore.collection("Orders").document();
         myOrder.put("orderID", firebaseAuth.getCurrentUser().getUid());
         myOrder.put("items", order.getItems());
-        myOrder.put("orderDate",  FieldValue.serverTimestamp());
+        myOrder.put("orderDate",  order.getOrderDate().toString());
         myOrder.put("totalPrice", order.getTotalPrice());
+        myOrder.put("Status", order.getStatus());
 
         documentReference.set(myOrder).
                 addOnSuccessListener(unused ->
-                Toast.makeText(Cart.this, "Order Done!", Toast.LENGTH_SHORT).show()).
+                        Toast.makeText(Cart.this, "Order Done!", Toast.LENGTH_SHORT).show()).
                 addOnFailureListener(e ->
-                Toast.makeText(Cart.this, "Fuck OFF!", Toast.LENGTH_SHORT).show());
-    }
-
-    public static ArrayList<Order> getAllOrders(){
-        ArrayList<Order> orders = new ArrayList<>();
-        firebaseFirestore.collection("Orders")
-                .whereEqualTo("orderID",firebaseAuth.getCurrentUser().getUid() )
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            System.out.println("Order : ****** " +  document.get("items"));
-                            orders.add(document.toObject(Order.class));
-                        }
-                    } else {
-                        System.out.println("Error getting documents: " + task.getException());
-                    }
-                });
-        return orders;
+                        Toast.makeText(Cart.this, "Fuck OFF!", Toast.LENGTH_SHORT).show());
     }
 
 }

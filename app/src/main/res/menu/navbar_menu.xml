@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+<group android:checkableBehavior="single">
 
     <item
         android:id="@+id/menu_wishlist"
@@ -8,11 +9,13 @@
         android:title="My Wishlist"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menu_wallet"
         android:icon="@drawable/ic_baseline_payments_24"
         android:title="My Wallet"
         app:showAsAction="
 always"/>
     <item
+        android:id="@+id/menu_orders"
         android:icon="@drawable/ic_baseline_shopping_bag_24"
         android:title="My Orders"
         app:showAsAction="always" />
@@ -41,4 +44,7 @@ always"/>
         android:title="Log out"
         android:iconTintMode="add"
         app:showAsAction="always" />
+
+</group>
+
 </menu>

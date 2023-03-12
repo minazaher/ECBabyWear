@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="false"
     tools:actionBarNavMode="tabs"
+    tools:openDrawer="start"
     android:id="@+id/drawer_layout">
 
 
@@ -21,6 +22,7 @@
         android:background="@drawable/et_grey"
         android:fitsSystemWindows="false"
         android:elevation="60dp">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

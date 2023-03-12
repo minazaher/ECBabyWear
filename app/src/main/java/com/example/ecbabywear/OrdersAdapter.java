@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.helper.widget.Layer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,7 +19,9 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
     ArrayList<Order> orders ;
     Context context;
 
+
     public OrdersAdapter() {
+
     }
 
     public OrdersAdapter(ArrayList<Order> orders, Context context) {

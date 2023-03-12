@@ -19,7 +19,7 @@
             android:layout_width="70dp"
             android:layout_height="match_parent"
             android:foregroundGravity="center_vertical"
-            android:src="@drawable/kid_model"
+            android:src="@drawable/avatar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppinsmedium"
-                android:text="Alex Nikoforov"
+                android:text="Mina Zaher"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
@@ -50,7 +50,7 @@
                 android:textColor="@color/white"
                 android:layout_marginTop="2dp"
                 android:alpha="0.7"
-                android:text="Fashion Desinger"
+                android:text="App Developer"
                 android:textSize="14sp"/>
 
         </LinearLayout>

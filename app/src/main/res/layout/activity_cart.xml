@@ -275,7 +275,7 @@
             android:alpha="0.7"
             android:fontFamily="@font/poppinsmedium"
             android:gravity="center"
-            android:text="Looks Like You Haven't Added\n Anything To Your Cart Tet"
+            android:text="Looks Like You Haven't Added\n Anything To Your Cart Yet"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="21sp"

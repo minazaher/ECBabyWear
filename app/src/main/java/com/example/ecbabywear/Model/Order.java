@@ -1,6 +1,5 @@
 package com.example.ecbabywear.Model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,14 +7,16 @@ public class Order {
 
     private String OrderID;
     private ArrayList<CartItem> Items;
-    private Date OrderDate;
+    private String OrderDate;
     private String TotalPrice;
+    private String Status;
 
-    public Order(String orderID, ArrayList<CartItem> items, Date orderDate, String totalPrice) {
+    public Order(String orderID, ArrayList<CartItem> items, String orderDate, String totalPrice, String status) {
         OrderID = orderID;
         Items = items;
-        OrderDate = orderDate;
+        OrderDate = orderDate.toString();
         TotalPrice = totalPrice;
+        Status = status;
     }
 
     public Order() {
@@ -29,11 +30,11 @@ public class Order {
         OrderID = orderID;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return OrderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         OrderDate = orderDate;
     }
 
@@ -62,5 +63,9 @@ public class Order {
                 ", OrderDate=" + OrderDate +
                 ", TotalPrice='" + TotalPrice + '\'' +
                 '}';
+    }
+
+    public String getStatus() {
+        return Status;
     }
 }

@@ -96,7 +96,6 @@ public class SignUp extends AppCompatActivity {
                                     System.out.println("Account Created for User " + UserID);
                                     GoToSignIn();
                                 }
-
                             });
                         }
                     }else

@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -18,6 +19,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -34,7 +36,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
-public class HomePage extends AppCompatActivity implements LifecycleOwner {
+public class HomePage extends AppCompatActivity implements LifecycleOwner, NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView NewArrivals, Categories  ;
     LinearLayout btn_profile, btn_swap, linearLayout_recview;
@@ -64,26 +66,19 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         navigationView = findViewById(R.id.nav_view);
         trans = findViewById(R.id.constraintLayout);
 
-
-        trans.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), OrderHistory.class);
-                startActivity(intent);
-            }
-        });
         setSupportActionBar(toolbar);
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.nav_open, R.string.nav_close);
+
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         Categories.setAdapter(new CategoriesAdapter(this));
         Categories.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
-
         initRecView();
-
 
         fab_cart.setOnClickListener((View view) -> {
          Intent intent = new Intent(HomePage.this, Cart.class);
@@ -131,8 +126,24 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner {
         NewArrivals.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+             super.onBackPressed();
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        if (item.getItemId() == R.id.menu_orders) {
+            Intent intent = new Intent(getApplicationContext(), OrderHistory.class);
+            startActivity(intent);
+            return true;
+        }
+        return true;
+    }
 }
 
 
