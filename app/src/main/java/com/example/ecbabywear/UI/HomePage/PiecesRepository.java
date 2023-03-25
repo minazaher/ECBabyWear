@@ -1,4 +1,7 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI.HomePage;
+
+import static com.example.ecbabywear.ApplicationClass.databaseReference;
+import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.Piece;
 import com.example.ecbabywear.UI.HomePage.HomePage;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,16 +35,12 @@ import java.util.List;
 
 public class PiecesRepository {
     MutableLiveData<List<Piece>> pieceListMutableLiveData;
-    DatabaseReference databaseReference;
     MutableLiveData<Piece> pieceMutableLiveData;
-
     private DocumentReference PiecesRef;
 
     public PiecesRepository() {
         this.pieceListMutableLiveData = new MutableLiveData<>();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Pieces");
-        FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
-        pieceMutableLiveData = new MutableLiveData<>();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();

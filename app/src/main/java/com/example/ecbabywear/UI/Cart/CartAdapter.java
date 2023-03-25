@@ -1,4 +1,4 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI.Cart;
 
 import static com.google.android.material.color.MaterialColors.getColor;
 
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ecbabywear.Model.CartItem;
+import com.example.ecbabywear.R;
 
 import java.util.ArrayList;
 

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.example.ecbabywear.CartAdapter;
+import com.example.ecbabywear.UI.Cart.CartAdapter;
 import com.example.ecbabywear.R;
 
 public class Requests extends AppCompatActivity {

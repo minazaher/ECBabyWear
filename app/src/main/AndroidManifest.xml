@@ -16,7 +16,7 @@
         android:theme="@style/Theme.ECBabyWear"
         tools:targetApi="31" >
         <activity
-            android:name=".OrderHistory"
+            android:name=".UI.OrderHistory.OrderHistory"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
@@ -39,7 +39,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.Cart"
+            android:name=".UI.Cart.Cart"
             android:exported="true" >
             <meta-data
                 android:name="android.app.lib_name"

@@ -1,5 +1,9 @@
 package com.example.ecbabywear.UI;
 
+import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
+import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
+import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,111 +15,112 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.example.ecbabywear.PiecesRepository;
+//import com.example.ecbabywear.UI.HomePage.PiecesRepository;
+import com.example.ecbabywear.ApplicationClass;
+import com.example.ecbabywear.Model.User;
 import com.example.ecbabywear.R;
+import com.example.ecbabywear.databinding.ActivityCartBinding;
+import com.example.ecbabywear.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SignUp extends AppCompatActivity {
-    Button SignUp;
-    TextView SignIn;
-    EditText Name, Email, Password, ConfirmPassword;
-    FirebaseAuth mAuth;
-    FirebaseFirestore mStore;
+    String CurrentName, CurrentPassword, CurrentEmail, Confirmation;
+    ActivitySignUpBinding activitySignUpBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        activitySignUpBinding = ActivitySignUpBinding.inflate(getLayoutInflater());
+        setContentView(activitySignUpBinding.getRoot());
 
-        SignUp = findViewById(R.id.btn_signUp);
-        Name = findViewById(R.id.et_name_signup);
-        Email = findViewById(R.id.et_email_signup);
-        Password = findViewById(R.id.et_password_signup);
-        SignIn = findViewById(R.id.tv_signInHere);
-        ConfirmPassword = findViewById(R.id.et_password_signup_c);
-        mAuth = FirebaseAuth.getInstance();
-        AtomicReference<String> UserID = null;
-        mStore = FirebaseFirestore.getInstance();
 
-//
-//        if (mAuth.getCurrentUser() != null){
-//            GoToSignIn();
-//        }
+        if (firebaseAuth.getCurrentUser() != null){
+            navigateToActivity(SignUp.this, SignIn.class);
+        }
 
-        SignIn.setOnClickListener(view -> {
-            GoToSignIn();
+        activitySignUpBinding.tvSignInHere.setOnClickListener(view -> {
+            navigateToActivity(SignUp.this, SignIn.class);
         });
 
-        SignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String CurrentEmail = Email.getText().toString();
-                String CurrentPassword = Password.getText().toString();
-                String Confirmation = ConfirmPassword.getText().toString();
-                String CurrentName = Name.getText().toString();
-                if (TextUtils.isEmpty(CurrentName)){
-                    Name.setError("Please Enter a Name");
-                    return;
-                }
+        activitySignUpBinding.btnSignUp.setOnClickListener(view -> {
+            GetDataFromEditTexts();
+            User currentUser = new User(CurrentName, CurrentEmail, CurrentPassword);
+            if (ValidateAllData())
+                CreateUser(currentUser);
+            else
+                Toast.makeText(this, "Please, Check Your Input", Toast.LENGTH_SHORT).show();
+        });
 
-                if(TextUtils.isEmpty(CurrentEmail)){
-                    Email.setError("Please Enter a valid Email");
-                    return;
-                }
+    }
 
-                if(TextUtils.isEmpty(CurrentPassword) || CurrentPassword.length() < 6){
-                    Password.setError("Please Enter a valid Password");
-                    return;
-                }
+    private void GetDataFromEditTexts(){
+        CurrentName = activitySignUpBinding.etNameSignup.getText().toString();
+        CurrentEmail = activitySignUpBinding.etEmailSignup.getText().toString();
+        CurrentPassword = activitySignUpBinding.etPasswordSignup.getText().toString();
+        Confirmation = activitySignUpBinding.etPasswordSignupC.getText().toString();
 
-                if (!CurrentPassword.equals(Confirmation)){
-                    Toast.makeText(SignUp.this, "Passwords are not equal", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+    }
 
+    private HashMap<String, Object> UserToMap(User user){
 
-                mAuth.createUserWithEmailAndPassword(CurrentEmail, CurrentPassword).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        Toast.makeText(SignUp.this, "User Created!", Toast.LENGTH_SHORT).show();
-                        String UserID = mAuth.getCurrentUser().getUid();
-                        if (!UserID.equals(null)){
-                            DocumentReference documentReference = mStore.collection("Users").document(UserID);
-                            HashMap<String, Object> user = new HashMap<>();
-                            user.put("Email", CurrentEmail);
-                            user.put("Password", CurrentPassword);
-                            user.put("Name", CurrentName);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    System.out.println("Account Created for User " + UserID);
-                                    GoToSignIn();
-                                }
-                            });
-                        }
-                    }else
-                        Toast.makeText(SignUp.this, "Task Not Successful", Toast.LENGTH_SHORT).show();
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap.put("Email", user.getEmail());
+        userMap.put("Password", user.getPassword());
+        userMap.put("Name", user.getName());
+        return userMap;
+    }
+
+    private void CreateUser(User currentUser){
+        firebaseAuth.createUserWithEmailAndPassword(CurrentEmail, CurrentPassword).
+                addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                String UserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+                DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
+                HashMap<String, Object> user = UserToMap(currentUser);
+                documentReference.set(user).addOnSuccessListener(unused -> {
+                    System.out.println("Account Created for User " + UserID);
+                    navigateToActivity(SignUp.this, SignIn.class);
                 });
-            }
+            }else
+                Toast.makeText(SignUp.this, "Error Creating User!", Toast.LENGTH_SHORT).show();
         });
 
-
-
-
-
-//        PiecesRepository piecesRepository = new PiecesRepository();
-//        piecesRepository.getPieceMutableLiveData(this);
     }
 
-    private void GoToSignIn(){
-        Intent i = new Intent();
-        i.setClass(SignUp.this, SignIn.class);
-        startActivity(i);
-        finish();
+    private boolean ValidateAllData(){
+        if (!ValidateTextField(CurrentName,activitySignUpBinding.etNameSignup)
+                && !ValidateTextField(CurrentName,activitySignUpBinding.etPasswordSignup)
+                && !ValidateTextField(CurrentEmail,activitySignUpBinding.etEmailSignup)) {
+            return false;
+        }
+
+        if(CurrentPassword.length() < 6){
+            activitySignUpBinding.etPasswordSignupC.setError("Please Enter a valid Password");
+            return false;
+        }
+
+        if (!CurrentPassword.equals(Confirmation)){
+            Toast.makeText(SignUp.this, "Passwords are not equal", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
+
+    private boolean ValidateTextField(String text, EditText editText){
+        if (TextUtils.isEmpty(text)){
+            editText.setError("Please Enter a Valid Value");
+            return false;
+        }
+        return true;
+    }
+
+
 }

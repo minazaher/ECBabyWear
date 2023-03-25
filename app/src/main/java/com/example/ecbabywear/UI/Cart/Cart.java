@@ -1,6 +1,5 @@
-package com.example.ecbabywear.UI;
+package com.example.ecbabywear.UI.Cart;
 
-import static com.example.ecbabywear.ApplicationClass.Cancelled;
 import static com.example.ecbabywear.ApplicationClass.cart;
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
@@ -9,7 +8,6 @@ import static com.example.ecbabywear.ApplicationClass.restartActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,27 +16,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ecbabywear.ApplicationClass;
-import com.example.ecbabywear.CartAdapter;
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.HomePage.HomePage;
 import com.example.ecbabywear.databinding.ActivityCartBinding;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Cart extends AppCompatActivity {
     ActivityCartBinding activityCartBinding;
@@ -49,13 +39,10 @@ public class Cart extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
-
-
-
         setContentView(activityCartBinding.getRoot());
+
+
         if (cart.size() == 0) {
             activityCartBinding.emptyLayout.setVisibility(View.VISIBLE);
             activityCartBinding.cartLayout.setVisibility(View.GONE);
@@ -106,6 +93,7 @@ public class Cart extends AppCompatActivity {
     public void addOrderToDatabase(Order order){
         Map<String, Object> myOrder = new HashMap<>();
         DocumentReference documentReference = firebaseFirestore.collection("Orders").document();
+
         myOrder.put("orderID", firebaseAuth.getCurrentUser().getUid());
         myOrder.put("items", order.getItems());
         myOrder.put("orderDate",  order.getOrderDate().toString());

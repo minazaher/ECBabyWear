@@ -1,4 +1,4 @@
-package com.example.ecbabywear;
+package com.example.ecbabywear.UI.OrderHistory;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,9 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
-import com.example.ecbabywear.UI.Cart;
+import com.example.ecbabywear.R;
 
 import java.util.ArrayList;
 

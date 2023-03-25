@@ -1,11 +1,14 @@
 package com.example.ecbabywear.UI;
 
+import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.R;
 
 public class SplashScreen extends AppCompatActivity {
@@ -16,10 +19,8 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         new Handler().postDelayed((Runnable) () -> {
-            Intent intent = new Intent(SplashScreen.this, SignUp.class);
-            startActivity(intent);
+            navigateToActivity(this, SignUp.class);
             finish();
         },3000);
-
     }
 }

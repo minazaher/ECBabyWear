@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -28,9 +27,9 @@ import android.widget.LinearLayout;
 
 import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.Piece;
-import com.example.ecbabywear.OrderHistory;
+import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
 import com.example.ecbabywear.R;
-import com.example.ecbabywear.UI.Cart;
+import com.example.ecbabywear.UI.Cart.Cart;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
