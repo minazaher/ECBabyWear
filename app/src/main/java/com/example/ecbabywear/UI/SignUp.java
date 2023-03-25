@@ -44,7 +44,6 @@ public class SignUp extends AppCompatActivity {
         if (firebaseAuth.getCurrentUser() != null){
             navigateToActivity(SignUp.this, SignIn.class);
         }
-
         activitySignUpBinding.tvSignInHere.setOnClickListener(view -> {
             navigateToActivity(SignUp.this, SignIn.class);
         });
@@ -80,12 +79,11 @@ public class SignUp extends AppCompatActivity {
     private void CreateUser(User currentUser){
         firebaseAuth.createUserWithEmailAndPassword(CurrentEmail, CurrentPassword).
                 addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                String UserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-                DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
-                HashMap<String, Object> user = UserToMap(currentUser);
-                documentReference.set(user).addOnSuccessListener(unused -> {
-                    System.out.println("Account Created for User " + UserID);
+                    if (task.isSuccessful()){
+                    String UserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+                    DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
+                    HashMap<String, Object> user = UserToMap(currentUser);
+                    documentReference.set(user).addOnSuccessListener(unused -> {
                     navigateToActivity(SignUp.this, SignIn.class);
                 });
             }else

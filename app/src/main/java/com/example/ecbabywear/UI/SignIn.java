@@ -1,5 +1,8 @@
 package com.example.ecbabywear.UI;
 
+import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
+import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,72 +17,72 @@ import android.widget.Toast;
 
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.HomePage.HomePage;
+import com.example.ecbabywear.databinding.ActivitySignInBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignIn extends AppCompatActivity {
-    Button SignIn;
-    TextView Register, ForgetPassword;
-    EditText Email, Password;
-    FirebaseAuth mAuth;
-
-
-
+    String CurrentEmail, CurrentPassword;
+    ActivitySignInBinding SignInBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        SignInBinding = ActivitySignInBinding.inflate(getLayoutInflater());
+        setContentView(SignInBinding.getRoot());
 
 
-        SignIn = findViewById(R.id.btn_signIn);
-        Email = findViewById(R.id.et_email_signin);
-        Password = findViewById(R.id.et_password_signin);
-        Register = findViewById(R.id.tv_registerHere);
-        mAuth = FirebaseAuth.getInstance();
-        ForgetPassword = findViewById(R.id.tv_forgot_password);
 
-
-        ForgetPassword.setOnClickListener(view -> {
-            assert (!TextUtils.isEmpty(Email.getText().toString()));
-            mAuth.sendPasswordResetEmail( Email.getText().toString());
+        SignInBinding.tvForgotPassword.setOnClickListener(view -> {
+            CurrentEmail  = SignInBinding.etEmailSignin.getText().toString().trim();
+            if(!TextUtils.isEmpty(CurrentEmail))
+                firebaseAuth.sendPasswordResetEmail(CurrentEmail);
         });
 
-
-        Register.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), SignUp.class));
+        SignInBinding.tvRegisterHere.setOnClickListener(view -> {
+            navigateToActivity(this, SignUp.class);
             finish();
         });
 
-        SignIn.setOnClickListener(view -> {
-            String CurrentEmail = Email.getText().toString();
-            String CurrentPassword = Password.getText().toString();
-
-            if(TextUtils.isEmpty(CurrentEmail)){
-                Email.setError("Please Enter a valid Email");
-                return;
-            }
-
-            if(TextUtils.isEmpty(CurrentPassword) || CurrentPassword.length() < 6){
-                Password.setError("Please Enter a valid Password");
-                return;
-            }
-
-
-            mAuth.signInWithEmailAndPassword(CurrentEmail, CurrentPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        Intent i = new Intent();
-                        i.setClass(SignIn.this, HomePage.class);
-                        startActivity(i);
-                    }
-                    else
-                        Toast.makeText(SignIn.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                }
-            });
+        SignInBinding.btnSignIn.setOnClickListener(view -> {
+            getDataFromEditTexts();
+            if (isDataValid())
+                signIn();
+            else
+                Toast.makeText(this, "Credentials are Not Valid!", Toast.LENGTH_SHORT).show();
         });
 
     }
+
+
+
+    private void signIn(){
+        firebaseAuth.signInWithEmailAndPassword(CurrentEmail, CurrentPassword).
+                addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        navigateToActivity(this, HomePage.class);
+                        finish();
+                    }
+                    else
+                        Toast.makeText(SignIn.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                });
+    }
+    private void getDataFromEditTexts(){
+        CurrentEmail  = SignInBinding.etEmailSignin.getText().toString().trim();
+        CurrentPassword = SignInBinding.etPasswordSignin.getText().toString().trim();
+    }
+    private boolean isDataValid(){
+        if (validateTextField(CurrentEmail, SignInBinding.etEmailSignin) && validateTextField(CurrentPassword, SignInBinding.etPasswordSignin))
+            return true;
+        return false;
+    }
+    private boolean validateTextField(String text, EditText editText){
+        if (TextUtils.isEmpty(text)){
+            editText.setError("Please Enter a Valid Value");
+            return false;
+        }
+        return true;
+    }
+
 }

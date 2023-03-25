@@ -1,6 +1,8 @@
 package com.example.ecbabywear.UI.HomePage;
 
 
+import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,8 @@ import com.example.ecbabywear.Model.Piece;
 import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.Cart.Cart;
+import com.example.ecbabywear.databinding.ActivityHomePageBinding;
+import com.example.ecbabywear.databinding.ActivitySignUpBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -38,92 +42,68 @@ import java.util.List;
 public class HomePage extends AppCompatActivity implements LifecycleOwner, NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView NewArrivals, Categories  ;
-    LinearLayout btn_profile, btn_swap, linearLayout_recview;
-    ImageView img;
-    FloatingActionButton fab_cart;
-    ImageView noData;
-    MutableLiveData<List<Piece>> ceList ;
     PiecesViewModel piecesViewModel;
-    Toolbar toolbar;
     NavigationView navigationView;
-    ConstraintLayout trans;
-    public DrawerLayout drawerLayout;
-    public ActionBarDrawerToggle actionBarDrawerToggle;
-    Animation animation;
+    ActivityHomePageBinding HomePageBinding;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        HomePageBinding = ActivityHomePageBinding.inflate(getLayoutInflater());
+        setContentView(HomePageBinding.getRoot());
 
-        fab_cart = findViewById(R.id.fab_cart);
-        Categories = findViewById(R.id.cats_recview);
-        img = findViewById(R.id.img_noData);
-        linearLayout_recview = findViewById(R.id.linear_recView);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        toolbar= findViewById(R.id.toolbar);
-        navigationView = findViewById(R.id.nav_view);
-        trans = findViewById(R.id.constraintLayout);
+        Categories = HomePageBinding.catsRecview;
+        drawerLayout = HomePageBinding.drawerLayout;
+        navigationView = HomePageBinding.navView;
 
-        setSupportActionBar(toolbar);
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.nav_open, R.string.nav_close);
-
+        setSupportActionBar(HomePageBinding.toolbar);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,HomePageBinding.toolbar, R.string.nav_open, R.string.nav_close);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.bringToFront();
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
         Categories.setAdapter(new CategoriesAdapter(this));
         Categories.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
         initRecView();
 
-        fab_cart.setOnClickListener((View view) -> {
-         Intent intent = new Intent(HomePage.this, Cart.class);
-         startActivity(intent);
+        HomePageBinding.fabCart.setOnClickListener((View view) -> {
+            navigateToActivity(this, Cart.class);
         });
 
-
-
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 
 
     private void initRecView() {
-        NewArrivals = findViewById(R.id.store_recview);
-        Display display = getWindowManager(). getDefaultDisplay();
-        Point size = new Point();
-        display. getSize(size);
-        int width = size.x;
+        NewArrivals = HomePageBinding.storeRecview;
+        NewArrivals.setNestedScrollingEnabled(false);
 
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        NewArrivals.setNestedScrollingEnabled(false);
-        if (width  == 1600){
+        if (getScreenWidth()  >= 1600){
                 gridLayoutManager.setSpanCount(4);
         }
         NewArrivals.setLayoutManager(gridLayoutManager);
 
         StoreAdapter storeAdapter = new StoreAdapter(this, ApplicationClass.FinalPieces);
-
-        piecesViewModel = ViewModelProviders.of(this).get(PiecesViewModel.class);
-        piecesViewModel.getLivePiecesData().observe(this, pieces -> storeAdapter.updatePiecesList(pieces));
-
         NewArrivals.setAdapter(storeAdapter);
-        System.out.println("ITEMS : " + PiecesViewModel.pieceList.toString());
-        NewArrivals.setVisibility(View.VISIBLE);
+
+//        piecesViewModel = ViewModelProviders.of(this).get(PiecesViewModel.class);
+//        piecesViewModel.getLivePiecesData().observe(this, storeAdapter::updatePiecesList);
     }
+
+    private int getScreenWidth(){
+        Display display = getWindowManager(). getDefaultDisplay();
+        Point size = new Point();
+        display. getSize(size);
+        return size.x;
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -135,14 +115,23 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         if (item.getItemId() == R.id.menu_orders) {
-            Intent intent = new Intent(getApplicationContext(), OrderHistory.class);
-            startActivity(intent);
+            navigateToActivity(this, OrderHistory.class);
             return true;
         }
         return true;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
 
 

@@ -34,7 +34,6 @@ public class ApplicationClass extends Application {
     public void onCreate() {
             super.onCreate();
 
-
             cart = new ArrayList<>();
             approved = new ArrayList<>();
             FinalPieces = (ArrayList<Piece>) PiecesViewModel.pieceList;
