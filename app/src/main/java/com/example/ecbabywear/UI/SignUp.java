@@ -4,6 +4,7 @@ import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.User;
 import com.example.ecbabywear.R;
+import com.example.ecbabywear.UI.HomePage.HomePage;
 import com.example.ecbabywear.databinding.ActivityCartBinding;
 import com.example.ecbabywear.databinding.ActivitySignUpBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -120,5 +122,18 @@ public class SignUp extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        showExitMessage();
+    }
 
+    private void showExitMessage(){
+        new AlertDialog.Builder(this)
+                .setTitle("Exit")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                    finishAffinity();
+                }).create().show();
+    }
 }

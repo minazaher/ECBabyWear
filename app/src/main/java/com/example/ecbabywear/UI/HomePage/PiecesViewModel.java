@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PiecesViewModel extends ViewModel {
-    MutableLiveData<List<Piece>> pieceListMutableLiveData;
+    public MutableLiveData<List<Piece>> pieceListMutableLiveData;
     DatabaseReference databaseReference;
     public static List<Piece> pieceList = new ArrayList<>();
     PiecesRepository piecesRepository;
@@ -19,7 +19,8 @@ public class PiecesViewModel extends ViewModel {
     public PiecesViewModel() {
         piecesRepository = new PiecesRepository();
         pieceListMutableLiveData = new MutableLiveData<>();
-        pieceListMutableLiveData = piecesRepository.getPieceMutableLiveData();
+//        pieceListMutableLiveData = piecesRepository.getPieceMutableLiveData();
+        System.out.println(pieceListMutableLiveData);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Pieces");
         init();
     }
@@ -29,7 +30,7 @@ public class PiecesViewModel extends ViewModel {
     }
 
     public void init(){
-        pieceListMutableLiveData.setValue(pieceList);
+        pieceList = getLivePiecesData().getValue();
     }
 
 }

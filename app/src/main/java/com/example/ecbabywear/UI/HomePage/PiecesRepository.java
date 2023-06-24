@@ -32,40 +32,31 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class PiecesRepository {
     MutableLiveData<List<Piece>> pieceListMutableLiveData;
-    MutableLiveData<Piece> pieceMutableLiveData;
-    private DocumentReference PiecesRef;
+    DatabaseReference databaseReference;
 
     public PiecesRepository() {
         this.pieceListMutableLiveData = new MutableLiveData<>();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Pieces");
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .build();
-        firebaseFirestore.setFirestoreSettings(settings);
     }
 
-    public MutableLiveData<List<Piece>> getPieceMutableLiveData() {
-
+    public List<Piece> getPieceMutableLiveData() {
+        List<Piece> pieceList = new ArrayList<>();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Piece> pieceList = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     Piece piece = ds.getValue(Piece.class);
                     pieceList.add(piece);
                 }
-                pieceListMutableLiveData.postValue(pieceList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 System.out.println("System Problem");
             }
         });
-        return pieceListMutableLiveData;
-
+        return pieceList;
     }
 
 }

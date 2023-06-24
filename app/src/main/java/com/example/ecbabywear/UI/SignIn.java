@@ -4,6 +4,7 @@ import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,10 +33,8 @@ public class SignIn extends AppCompatActivity {
         SignInBinding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(SignInBinding.getRoot());
 
-
-
         SignInBinding.tvForgotPassword.setOnClickListener(view -> {
-            CurrentEmail  = SignInBinding.etEmailSignin.getText().toString().trim();
+            getCurrentEmail();
             if(!TextUtils.isEmpty(CurrentEmail))
                 firebaseAuth.sendPasswordResetEmail(CurrentEmail);
         });
@@ -52,10 +51,7 @@ public class SignIn extends AppCompatActivity {
             else
                 Toast.makeText(this, "Credentials are Not Valid!", Toast.LENGTH_SHORT).show();
         });
-
     }
-
-
 
     private void signIn(){
         firebaseAuth.signInWithEmailAndPassword(CurrentEmail, CurrentPassword).
@@ -68,14 +64,20 @@ public class SignIn extends AppCompatActivity {
                         Toast.makeText(SignIn.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                 });
     }
+
     private void getDataFromEditTexts(){
+        getCurrentEmail();
+        getCurrentPassword();
+    }
+    private void getCurrentEmail(){
         CurrentEmail  = SignInBinding.etEmailSignin.getText().toString().trim();
+    }
+    private void getCurrentPassword(){
         CurrentPassword = SignInBinding.etPasswordSignin.getText().toString().trim();
     }
     private boolean isDataValid(){
-        if (validateTextField(CurrentEmail, SignInBinding.etEmailSignin) && validateTextField(CurrentPassword, SignInBinding.etPasswordSignin))
-            return true;
-        return false;
+        return validateTextField(CurrentEmail, SignInBinding.etEmailSignin) &&
+                validateTextField(CurrentPassword, SignInBinding.etPasswordSignin);
     }
     private boolean validateTextField(String text, EditText editText){
         if (TextUtils.isEmpty(text)){
@@ -83,6 +85,11 @@ public class SignIn extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        navigateToActivity(SignIn.this, SignUp.class);
     }
 
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.Model.Piece;
+import com.example.ecbabywear.UI.HomePage.PiecesRepository;
 import com.example.ecbabywear.UI.HomePage.PiecesViewModel;
 import com.google.api.Context;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ApplicationClass extends Application {
@@ -28,19 +30,20 @@ public class ApplicationClass extends Application {
     public static FirebaseAuth firebaseAuth;
     public static DatabaseReference databaseReference;
 
-
-    public static ArrayList<Piece> FinalPieces;
+    public static List<Piece> FinalPieces;
     @Override
     public void onCreate() {
-            super.onCreate();
+        super.onCreate();
 
-            cart = new ArrayList<>();
-            approved = new ArrayList<>();
-            FinalPieces = (ArrayList<Piece>) PiecesViewModel.pieceList;
-            firebaseFirestore = FirebaseFirestore.getInstance();
-            firebaseAuth = FirebaseAuth.getInstance();
-            orders = new ArrayList<>();
-            Cancelled = new ArrayList<>();
+        cart = new ArrayList<>();
+        approved = new ArrayList<>();
+        FinalPieces = (ArrayList<Piece>) PiecesViewModel.pieceList;
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        orders = new ArrayList<>();
+        Cancelled = new ArrayList<>();
+
     }
 
     public static void restartActivity(Activity act){

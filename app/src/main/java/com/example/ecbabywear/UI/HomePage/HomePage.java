@@ -1,48 +1,41 @@
 package com.example.ecbabywear.UI.HomePage;
 
 
+import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.Piece;
 import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.Cart.Cart;
+import com.example.ecbabywear.UI.SignIn;
 import com.example.ecbabywear.databinding.ActivityHomePageBinding;
-import com.example.ecbabywear.databinding.ActivitySignUpBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
 public class HomePage extends AppCompatActivity implements LifecycleOwner, NavigationView.OnNavigationItemSelectedListener {
 
-    RecyclerView NewArrivals, Categories  ;
-    PiecesViewModel piecesViewModel;
+    RecyclerView NewArrivals, Categories;
+    PiecesRepository piecesRepository;
     NavigationView navigationView;
     ActivityHomePageBinding HomePageBinding;
     DrawerLayout drawerLayout;
@@ -55,21 +48,10 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
         HomePageBinding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(HomePageBinding.getRoot());
 
-        Categories = HomePageBinding.catsRecview;
-        drawerLayout = HomePageBinding.drawerLayout;
-        navigationView = HomePageBinding.navView;
 
-        setSupportActionBar(HomePageBinding.toolbar);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,HomePageBinding.toolbar, R.string.nav_open, R.string.nav_close);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.bringToFront();
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        Categories.setAdapter(new CategoriesAdapter(this));
-        Categories.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
-
-        initRecView();
+        initializeDrawerLayout();
+        initializeCategoriesRecycler();
+        initializeNewArrivalsRecycler();
 
         HomePageBinding.fabCart.setOnClickListener((View view) -> {
             navigateToActivity(this, Cart.class);
@@ -78,23 +60,44 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
     }
 
 
+    private void initializeDrawerLayout(){
+        drawerLayout = HomePageBinding.drawerLayout;
+        navigationView = HomePageBinding.navView;
+        setSupportActionBar(HomePageBinding.toolbar);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,HomePageBinding.toolbar, R.string.nav_open, R.string.nav_close);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.bringToFront();
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+    }
 
-    private void initRecView() {
+    private void initializeCategoriesRecycler() {
+        Categories = HomePageBinding.catsRecview;
+        Categories.setAdapter(new CategoriesAdapter(this));
+        Categories.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+    }
+
+    private void initializeNewArrivalsRecycler() {
+        piecesRepository = new PiecesRepository();
         NewArrivals = HomePageBinding.storeRecview;
         NewArrivals.setNestedScrollingEnabled(false);
 
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        if (getScreenWidth()  >= 1600){
-                gridLayoutManager.setSpanCount(4);
-        }
+        GridLayoutManager gridLayoutManager = CustomGridLayout();
         NewArrivals.setLayoutManager(gridLayoutManager);
 
-        StoreAdapter storeAdapter = new StoreAdapter(this, ApplicationClass.FinalPieces);
-        NewArrivals.setAdapter(storeAdapter);
+        List<Piece> newArrival = piecesRepository.getPieceMutableLiveData();
+        StoreAdapter storeAdapter = new StoreAdapter(this,newArrival);
 
-//        piecesViewModel = ViewModelProviders.of(this).get(PiecesViewModel.class);
-//        piecesViewModel.getLivePiecesData().observe(this, storeAdapter::updatePiecesList);
+        NewArrivals.setAdapter(storeAdapter);
+    }
+
+
+    private GridLayoutManager CustomGridLayout(){
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        if (getScreenWidth()  >= 1600){
+            gridLayoutManager.setSpanCount(4);
+        }
+        return gridLayoutManager;
     }
 
     private int getScreenWidth(){
@@ -103,14 +106,23 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
         display. getSize(size);
         return size.x;
     }
-
-
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
         else
-             super.onBackPressed();
+            showSignOutMessage();
+    }
+
+    private void showSignOutMessage(){
+        new AlertDialog.Builder(this)
+                .setTitle("Sign Out")
+                .setMessage("Are you sure you want to sign out?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                    firebaseAuth.signOut();
+                    navigateToActivity(HomePage.this, SignIn.class);
+                }).create().show();
     }
 
     @Override
@@ -121,8 +133,6 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
         }
         return true;
     }
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
