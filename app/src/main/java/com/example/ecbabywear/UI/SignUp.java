@@ -70,7 +70,6 @@ public class SignUp extends AppCompatActivity {
     }
 
     private HashMap<String, Object> UserToMap(User user){
-
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("Email", user.getEmail());
         userMap.put("Password", user.getPassword());

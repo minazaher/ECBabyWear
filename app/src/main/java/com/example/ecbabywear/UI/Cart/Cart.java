@@ -3,7 +3,6 @@ package com.example.ecbabywear.UI.Cart;
 import static com.example.ecbabywear.ApplicationClass.cart;
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
-import static com.example.ecbabywear.ApplicationClass.orders;
 import static com.example.ecbabywear.ApplicationClass.restartActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +19,10 @@ import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.HomePage.HomePage;
+import com.example.ecbabywear.UI.OrderHistory.OrderRepository;
 import com.example.ecbabywear.databinding.ActivityCartBinding;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.text.DateFormat;
@@ -35,12 +36,16 @@ public class Cart extends AppCompatActivity {
     Double ItemPrice  , TotalPriceBeforeTaxes = 0.0, Taxes , DeliveryServices = 20.0, Total = 0.0;
     DecimalFormat df = new DecimalFormat("0.00");
     DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT);
+    FirebaseUser user;
+    OrderRepository orderRepository;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
         setContentView(activityCartBinding.getRoot());
+        orderRepository = new OrderRepository();
+        user = firebaseAuth.getCurrentUser();
 
 
         if (cart.size() == 0) {
@@ -74,10 +79,9 @@ public class Cart extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 String date = dateFormat.format(new Date());
                 order = new Order("ord1", cart, date , Total.toString(), "Completed");
-                orders.add(order);
             }
             assert order != null;
-            addOrderToDatabase(order);
+            orderRepository.addOrderToDatabase(order,user);
             startActivity(new Intent(getApplicationContext(), HomePage.class));
         });
 
@@ -90,21 +94,6 @@ public class Cart extends AppCompatActivity {
     }
 
 
-    public void addOrderToDatabase(Order order){
-        Map<String, Object> myOrder = new HashMap<>();
-        DocumentReference documentReference = firebaseFirestore.collection("Orders").document();
 
-        myOrder.put("orderID", firebaseAuth.getCurrentUser().getUid());
-        myOrder.put("items", order.getItems());
-        myOrder.put("orderDate",  order.getOrderDate().toString());
-        myOrder.put("totalPrice", order.getTotalPrice());
-        myOrder.put("Status", order.getStatus());
-
-        documentReference.set(myOrder).
-                addOnSuccessListener(unused ->
-                        Toast.makeText(Cart.this, "Order Done!", Toast.LENGTH_SHORT).show()).
-                addOnFailureListener(e ->
-                        Toast.makeText(Cart.this, "Fuck OFF!", Toast.LENGTH_SHORT).show());
-    }
 
 }

@@ -22,10 +22,12 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.Model.Piece;
 import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.Cart.Cart;
+import com.example.ecbabywear.UI.OrderHistory.OrderRepository;
 import com.example.ecbabywear.UI.SignIn;
 import com.example.ecbabywear.databinding.ActivityHomePageBinding;
 import com.google.android.material.navigation.NavigationView;
@@ -47,6 +49,9 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
         setContentView(R.layout.activity_home_page);
         HomePageBinding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(HomePageBinding.getRoot());
+        OrderRepository orderRepository = new OrderRepository();
+
+
 
 
         initializeDrawerLayout();

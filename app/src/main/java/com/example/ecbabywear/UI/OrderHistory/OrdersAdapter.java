@@ -17,13 +17,9 @@ import com.example.ecbabywear.R;
 import java.util.ArrayList;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolder> {
-    ArrayList<Order> orders ;
+    ArrayList<Order> orders = new ArrayList<>();
     Context context;
 
-
-    public OrdersAdapter() {
-
-    }
 
     public OrdersAdapter(ArrayList<Order> orders, Context context) {
         this.orders = orders;

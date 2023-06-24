@@ -25,7 +25,6 @@ public class ApplicationClass extends Application {
     public static Piece currentPiece;
     public static ArrayList<CartItem> cart;
     public static ArrayList<Piece> approved;
-    public static ArrayList<Order> orders, Cancelled;
     public static FirebaseFirestore firebaseFirestore;
     public static FirebaseAuth firebaseAuth;
     public static DatabaseReference databaseReference;
@@ -40,9 +39,6 @@ public class ApplicationClass extends Application {
         FinalPieces = (ArrayList<Piece>) PiecesViewModel.pieceList;
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-
-        orders = new ArrayList<>();
-        Cancelled = new ArrayList<>();
 
     }
 

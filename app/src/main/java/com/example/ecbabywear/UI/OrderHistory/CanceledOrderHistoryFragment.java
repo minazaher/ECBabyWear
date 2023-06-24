@@ -1,5 +1,7 @@
 package com.example.ecbabywear.UI.OrderHistory;
 
+import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,38 +17,38 @@ import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CanceledOrderHistoryFragment extends Fragment {
+    private OrderRepository orderRepository;
+    private ArrayList<Order> cancelledOrders;
 
-    View v;
-    private ArrayList<Order> orders;
-    private ArrayList<CartItem> cartItems;
-
-
-    public CanceledOrderHistoryFragment(){
+    public CanceledOrderHistoryFragment() {
 
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        orders = new ArrayList<>();
-        cartItems = new ArrayList<CartItem>();
-
+        orderRepository = new OrderRepository();
     }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_order_history, container, false);
-        RecyclerView ordersRecyclerView = (RecyclerView) v.findViewById(R.id.orders_recylerview);
-
-        System.out.println("Orders From Fragment : " + orders.toString());
-        OrdersAdapter ordersAdapter = new OrdersAdapter(ApplicationClass.Cancelled , getContext());
-        ordersRecyclerView.setAdapter(ordersAdapter);
-        ordersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        return v;
+        View view = inflater.inflate(R.layout.fragment_order_history, container, false);
+        FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+        orderRepository.getCancelledOrdersByUser(firebaseUser, orders -> {
+            RecyclerView ordersRecyclerView = (RecyclerView) view.findViewById(R.id.orders_recylerview);
+            cancelledOrders = (ArrayList<Order>) orders;
+            OrdersAdapter adapter = new OrdersAdapter(cancelledOrders, this.getContext());
+            ordersRecyclerView.setAdapter(adapter);
+            ordersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        });
+        return view;
     }
 }
