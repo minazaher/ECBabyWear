@@ -1,5 +1,11 @@
 package com.example.ecbabywear.Model;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+
 public class Piece {
     private String Name;
     private String URL;
@@ -94,6 +100,11 @@ public class Piece {
                 ", LongDescription='" + LongDescription + '\'' +
                 ", Status='" + Status + '\'' +
                 '}';
+    }
+
+    @BindingAdapter("android:loadImage")
+    public static void loadImage(ImageView imageView, String URL){
+        Glide.with(imageView).asBitmap().load(URL).into(imageView);
     }
 }
 
