@@ -3,22 +3,15 @@ package com.example.ecbabywear;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.example.ecbabywear.Model.CartItem;
-import com.example.ecbabywear.Model.Order;
-import com.example.ecbabywear.Model.Piece;
-import com.example.ecbabywear.UI.HomePage.PiecesRepository;
-import com.example.ecbabywear.UI.HomePage.PiecesViewModel;
-import com.google.api.Context;
+import com.example.ecbabywear.ViewModel.PiecesViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ApplicationClass extends Application {
 

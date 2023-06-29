@@ -1,4 +1,4 @@
-package com.example.ecbabywear.UI.OrderHistory;
+package com.example.ecbabywear.Utilis;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -37,7 +37,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
     public void onBindViewHolder(@NonNull mViewHolder holder, int position) {
         holder.Name.setText(orders.get(position).getItems().get(0).getName());
         holder.Date.setText(orders.get(position).getOrderDate().toString());
-        holder.Price.setText(orders.get(position).getTotalPrice());
+        holder.Price.setText("$" +orders.get(position).getTotalPrice());
         Glide.with(context).asBitmap().load(orders.get(position).getItems().get(0).getURL()).into(holder.Image);
     }
 
@@ -51,7 +51,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
         ImageView Image;
         public mViewHolder(@NonNull View itemView) {
             super(itemView);
-            Name = itemView.findViewById(R.id.tv_orderName);
+            Name = itemView.findViewById(R.id.tv_brand);
             Date = itemView.findViewById(R.id.tv_orderDate);
             Price = itemView.findViewById(R.id.tv_orderPrice);
             Image = itemView.findViewById(R.id.img_order);

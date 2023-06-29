@@ -5,107 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_cart"
+    tools:context=".UI.Cart">
 
-    tools:context=".UI.Cart.Cart">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/cart_toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        android:background="@color/white"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:navigationIcon="@drawable/ic_baseline_arrow_back_24">-->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/textView4"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:fontFamily="@font/poppinsbold"-->
-<!--            android:gravity="center"-->
-<!--            android:text="Cart"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/imageView"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/imageView2"-->
-<!--            app:layout_constraintHorizontal_bias="0.0"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/imageView"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/imageView"-->
-<!--            app:layout_constraintVertical_bias="0.0" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/btn_clear"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:src="@drawable/ic_baseline_remove_shopping_cart_24"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/textView4"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/textView4"-->
-<!--            app:layout_constraintVertical_bias="1.0" />-->
-<!--    </androidx.appcompat.widget.Toolbar>-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cart_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
+        android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginStart="120dp"
-
-            android:fontFamily="@font/poppinsbold"
-            android:gravity="center"
-            android:text="Cart"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintEnd_toStartOf="@+id/btn_clear"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageView
-            android:id="@+id/btn_clear"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_baseline_remove_shopping_cart_24"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView4"
-            app:layout_constraintVertical_bias="1.0" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cart_recview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:maxHeight="320dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,8 +39,8 @@
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
             android:orientation="horizontal"
+            android:layout_marginHorizontal="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cart_recview">
@@ -238,7 +160,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/empty_layout"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foregroundGravity="center">

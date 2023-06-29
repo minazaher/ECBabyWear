@@ -1,6 +1,4 @@
-package com.example.ecbabywear.UI.Cart;
-
-import static com.google.android.material.color.MaterialColors.getColor;
+package com.example.ecbabywear.Utilis;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

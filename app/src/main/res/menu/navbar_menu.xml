@@ -4,8 +4,8 @@
 <group android:checkableBehavior="single">
 
     <item
-        android:id="@+id/menu_wishlist"
-        android:icon="@drawable/ic_baseline_favorite_24"
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_baseline_person_24"
         android:title="My Wishlist"
         app:showAsAction="always" />
     <item

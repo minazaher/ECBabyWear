@@ -4,39 +4,36 @@ package com.example.ecbabywear.UI.HomePage;
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.ecbabywear.Model.Order;
-import com.example.ecbabywear.Model.Piece;
-import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.ecbabywear.R;
-import com.example.ecbabywear.UI.Cart.Cart;
-import com.example.ecbabywear.UI.OrderHistory.OrderRepository;
+import com.example.ecbabywear.Repositories.PiecesRepository;
+import com.example.ecbabywear.UI.Cart;
+import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
 import com.example.ecbabywear.UI.SignIn;
+import com.example.ecbabywear.UI.WishlistActivity;
+import com.example.ecbabywear.Utilis.CategoriesAdapter;
+import com.example.ecbabywear.Utilis.StoreAdapter;
 import com.example.ecbabywear.databinding.ActivityHomePageBinding;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
+public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-public class HomePage extends AppCompatActivity implements LifecycleOwner, NavigationView.OnNavigationItemSelectedListener {
-
-    RecyclerView NewArrivals, Categories;
+    RecyclerView newArrivals, Categories;
     PiecesRepository piecesRepository;
     NavigationView navigationView;
     ActivityHomePageBinding HomePageBinding;
@@ -49,11 +46,7 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
         setContentView(R.layout.activity_home_page);
         HomePageBinding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(HomePageBinding.getRoot());
-        OrderRepository orderRepository = new OrderRepository();
-
-
-
-
+        piecesRepository = new PiecesRepository();
         initializeDrawerLayout();
         initializeCategoriesRecycler();
         initializeNewArrivalsRecycler();
@@ -63,6 +56,33 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            showSignOutMessage();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_orders) {
+            navigateToActivity(this, OrderHistory.class);
+        }
+        else if (item.getItemId() ==  R.id.menu_profile){
+            navigateToActivity(this, WishlistActivity.class);
+        }
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     private void initializeDrawerLayout(){
@@ -83,17 +103,14 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
     }
 
     private void initializeNewArrivalsRecycler() {
-        piecesRepository = new PiecesRepository();
-        NewArrivals = HomePageBinding.storeRecview;
-        NewArrivals.setNestedScrollingEnabled(false);
-
-        GridLayoutManager gridLayoutManager = CustomGridLayout();
-        NewArrivals.setLayoutManager(gridLayoutManager);
-
-        List<Piece> newArrival = piecesRepository.getPieceMutableLiveData();
-        StoreAdapter storeAdapter = new StoreAdapter(this,newArrival);
-
-        NewArrivals.setAdapter(storeAdapter);
+        newArrivals = HomePageBinding.storeRecview;
+        newArrivals.setNestedScrollingEnabled(false);
+        newArrivals.setLayoutManager(CustomGridLayout());
+        piecesRepository.getPieceMutableLiveData(
+                newArrivalList -> {
+                    StoreAdapter storeAdapter = new StoreAdapter(this,newArrivalList);
+                    newArrivals.setAdapter(storeAdapter);
+                });
     }
 
 
@@ -111,13 +128,6 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
         display. getSize(size);
         return size.x;
     }
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            drawerLayout.closeDrawer(GravityCompat.START);
-        else
-            showSignOutMessage();
-    }
 
     private void showSignOutMessage(){
         new AlertDialog.Builder(this)
@@ -128,22 +138,6 @@ public class HomePage extends AppCompatActivity implements LifecycleOwner, Navig
                     firebaseAuth.signOut();
                     navigateToActivity(HomePage.this, SignIn.class);
                 }).create().show();
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_orders) {
-            navigateToActivity(this, OrderHistory.class);
-            return true;
-        }
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.ecbabywear.UI.HomePage;
+package com.example.ecbabywear.Utilis;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,16 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ecbabywear.ApplicationClass;
-import com.example.ecbabywear.Model.Piece;
+import com.example.ecbabywear.Piece;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.ItemDetails;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.viewholder> {

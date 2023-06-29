@@ -1,14 +1,12 @@
-package com.example.ecbabywear.UI.OrderHistory;
+package com.example.ecbabywear.Repositories;
 
 import static com.example.ecbabywear.ApplicationClass.databaseReference;
-import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
-
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ecbabywear.Model.Order;
-import com.example.ecbabywear.Model.Piece;
+import com.example.ecbabywear.Piece;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -36,11 +34,10 @@ public class OrderRepository {
         firebaseFirestore.setFirestoreSettings(settings);
     }
 
-    public void addOrderToDatabase(Order order, FirebaseUser user){
+    public void addOrderToDatabase(Order order){
         Map<String, Object> myOrder = new HashMap<>();
         DocumentReference documentReference = firebaseFirestore.collection("Orders").document();
-        System.out.println("this user ID is : " + user.getUid());
-        myOrder.put("orderID", user.getUid());
+        myOrder.put("orderID", order.getOrderID());
         myOrder.put("items", order.getItems());
         myOrder.put("orderDate", order.getOrderDate());
         myOrder.put("totalPrice", order.getTotalPrice());
@@ -95,7 +92,5 @@ public class OrderRepository {
     public interface OnOrdersRetrievedListener {
         void onOrdersRetrieved(List<Order> orders);
     }
-
-
 
 }

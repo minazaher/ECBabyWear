@@ -1,4 +1,4 @@
-package com.example.ecbabywear.UI.HomePage;
+package com.example.ecbabywear.Utilis;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.ecbabywear.R;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.viewholder> {

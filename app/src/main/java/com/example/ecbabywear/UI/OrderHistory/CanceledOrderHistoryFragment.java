@@ -13,14 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ecbabywear.ApplicationClass;
-import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
+import com.example.ecbabywear.Repositories.OrderRepository;
+import com.example.ecbabywear.Utilis.OrdersAdapter;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CanceledOrderHistoryFragment extends Fragment {
     private OrderRepository orderRepository;

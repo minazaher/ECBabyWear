@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="false"
     tools:actionBarNavMode="tabs"
-    tools:openDrawer="start"
     android:id="@+id/drawer_layout">
 
 
@@ -75,7 +74,7 @@
 
 
         <EditText
-            android:layout_width="20dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="start"
             android:layout_weight="5"
@@ -285,6 +284,7 @@
                 android:gravity="bottom"
                 app:fabAlignmentMode="end"
                 android:padding="3dp"
+                app:contentInsetStart="0dp"
                 android:animateLayoutChanges="true"
                 app:fabAnimationMode="scale"
                 app:fabCradleMargin="10dp"

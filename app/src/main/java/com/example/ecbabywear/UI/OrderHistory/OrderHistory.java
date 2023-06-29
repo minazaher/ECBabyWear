@@ -1,22 +1,16 @@
 package com.example.ecbabywear.UI.OrderHistory;
 
-import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 
-import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
+import com.example.ecbabywear.Repositories.OrderRepository;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class OrderHistory extends AppCompatActivity {
     private TabLayout tabLayout;

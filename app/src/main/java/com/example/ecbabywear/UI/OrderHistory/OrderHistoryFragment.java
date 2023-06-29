@@ -15,16 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecbabywear.ApplicationClass;
-import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
-import com.example.ecbabywear.Model.User;
 import com.example.ecbabywear.R;
+import com.example.ecbabywear.Repositories.OrderRepository;
+import com.example.ecbabywear.Utilis.OrdersAdapter;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class OrderHistoryFragment extends Fragment {
     private OrderRepository orderRepository;

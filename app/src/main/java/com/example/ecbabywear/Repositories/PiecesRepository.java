@@ -1,34 +1,15 @@
-package com.example.ecbabywear.UI.HomePage;
-
-import static com.example.ecbabywear.ApplicationClass.databaseReference;
-import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
-
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
+package com.example.ecbabywear.Repositories;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.ecbabywear.ApplicationClass;
-import com.example.ecbabywear.Model.Piece;
-import com.example.ecbabywear.UI.HomePage.HomePage;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.ecbabywear.Piece;
+import com.example.ecbabywear.UI.HomePage.PiecesCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +22,7 @@ public class PiecesRepository {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Pieces");
     }
 
-    public List<Piece> getPieceMutableLiveData() {
+    public List<Piece> getPieceMutableLiveData(PiecesCallback listener) {
         List<Piece> pieceList = new ArrayList<>();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -50,6 +31,7 @@ public class PiecesRepository {
                     Piece piece = ds.getValue(Piece.class);
                     pieceList.add(piece);
                 }
+                listener.onPiecesRetrievedListener(pieceList);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

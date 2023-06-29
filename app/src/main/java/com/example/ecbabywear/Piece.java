@@ -1,4 +1,4 @@
-package com.example.ecbabywear.Model;
+package com.example.ecbabywear;
 
 import android.widget.ImageView;
 
