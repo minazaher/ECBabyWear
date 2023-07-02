@@ -8,6 +8,8 @@
     android:weightSum="3"
     tools:context=".UI.ItemDetails">
 
+
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_itemDetails"
         android:layout_width="match_parent"
@@ -21,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout6"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="320dp"
@@ -89,9 +92,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_details_itemDes">
@@ -171,8 +174,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:paddingHorizontal="16dp"
             android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.375"
@@ -231,6 +234,15 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="419dp" />
 
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete from wishlist"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_details_itemDes" />
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_add_to_cart"
             android:layout_width="match_parent"

@@ -1,5 +1,5 @@
 package com.example.ecbabywear.Utilis;
 
-public interface OnDataChangerListener {
+public interface OnDataChangedListener {
         void onDataChanged();
 }

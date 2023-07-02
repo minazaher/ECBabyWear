@@ -3,6 +3,7 @@ package com.example.ecbabywear.Model;
 import com.example.ecbabywear.Piece;
 
 public class CartItem extends Piece {
+
     private int itemQuantity;
 
     public CartItem(){
@@ -25,5 +26,19 @@ public class CartItem extends Piece {
 
     public void setItemQuantity(int itemQuantity) {
         this.itemQuantity = itemQuantity;
+    }
+
+    public void decreaseItemQuantity(){
+        if (this.getItemQuantity() >0)
+            this.itemQuantity -=1;
+    }
+
+    public void increaseItemQuantity(){
+            this.itemQuantity +=1;
+    }
+
+    public Double getItemPrice(){
+        double Price = Double.parseDouble(this.getPrice());
+        return itemQuantity *  Price;
     }
 }

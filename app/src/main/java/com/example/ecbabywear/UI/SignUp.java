@@ -4,38 +4,26 @@ import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-//import com.example.ecbabywear.Repositories.PiecesRepository;
-import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.User;
-import com.example.ecbabywear.R;
-import com.example.ecbabywear.UI.HomePage.HomePage;
-import com.example.ecbabywear.databinding.ActivityCartBinding;
+import com.example.ecbabywear.Repositories.WishlistRepository;
 import com.example.ecbabywear.databinding.ActivitySignUpBinding;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class SignUp extends AppCompatActivity {
     String CurrentName, CurrentPassword, CurrentEmail, Confirmation;
     ActivitySignUpBinding activitySignUpBinding;
-
+    WishlistRepository wishlistRepository ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +72,8 @@ public class SignUp extends AppCompatActivity {
                     String UserID = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
                     DocumentReference documentReference = firebaseFirestore.collection("Users").document(UserID);
                     HashMap<String, Object> user = UserToMap(currentUser);
+                    wishlistRepository = new WishlistRepository(UserID);
+                    wishlistRepository.CreateWishlist(UserID);
                     documentReference.set(user).addOnSuccessListener(unused -> {
                     navigateToActivity(SignUp.this, SignIn.class);
                 });

@@ -4,16 +4,15 @@ package com.example.ecbabywear.UI.OrderHistory;
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
@@ -41,7 +40,6 @@ public class OrderHistoryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
-
 
         FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
         orderRepository.getConfirmedOrdersByUser(firebaseUser, orders -> {

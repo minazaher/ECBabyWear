@@ -126,7 +126,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_brand" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/tv_reorder"
+            android:id="@+id/btn_reorder"
             android:layout_width="135dp"
             android:layout_height="43dp"
             android:layout_marginBottom="14dp"
@@ -141,6 +141,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_view_order"
             android:layout_width="135dp"
             android:layout_height="43dp"
             android:layout_marginBottom="14dp"

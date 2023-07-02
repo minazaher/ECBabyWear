@@ -1,7 +1,5 @@
 package com.example.ecbabywear.Model;
 
-import com.example.ecbabywear.Piece;
-
 import java.util.ArrayList;
 
 public class User {
@@ -10,7 +8,7 @@ public class User {
     private String Password;
     private ArrayList<Order> OrdersHistory;
     private ArrayList<Request> Requests;
-    private Piece[] wishlist;
+    private Wishlist wishlist;
 
     public User() {
     }
@@ -19,7 +17,7 @@ public class User {
         Name = name;
         Email = email;
         Password = password;
-        this.wishlist = new Piece[15];
+        this.wishlist = new Wishlist();
     }
 
     public User(String name, String email, String password, ArrayList<Order> ordersHistory, ArrayList<Request> requests) {

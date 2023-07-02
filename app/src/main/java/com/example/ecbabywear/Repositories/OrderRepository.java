@@ -45,7 +45,6 @@ public class OrderRepository {
 
         documentReference.set(myOrder);
 
-
     }
 
     public List<Order> getConfirmedOrdersByUser(FirebaseUser user, OnOrdersRetrievedListener listener){
