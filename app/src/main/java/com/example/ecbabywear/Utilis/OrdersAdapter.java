@@ -1,4 +1,4 @@
-package com.example.ecbabywear.Utilis;
+package com.example.ecbabywear.Model.Utilis;
 
 import static com.example.ecbabywear.ApplicationClass.cart;
 
@@ -43,6 +43,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
         holder.Name.setText(orders.get(position).getItems().get(0).getName());
         holder.Date.setText(orders.get(position).getOrderDate().toString());
         holder.Price.setText("$" +orders.get(position).getTotalPrice());
+        holder.orderCount.setText(orders.get(position).getItems().size()+"items");
         Glide.with(context).asBitmap().load(orders.get(position).getItems().get(0).getURL()).into(holder.Image);
         holder.Reorder.setOnClickListener(view -> {
             Intent intent = new Intent(context, Cart.class);
@@ -58,7 +59,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
     }
 
     public class mViewHolder extends RecyclerView.ViewHolder{
-        TextView Name, Date,Price;
+        TextView Name, Date,Price, orderCount;
         ImageView Image;
         AppCompatButton Reorder;
         public mViewHolder(@NonNull View itemView) {
@@ -68,6 +69,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
             Price = itemView.findViewById(R.id.tv_orderPrice);
             Reorder = itemView.findViewById(R.id.btn_reorder);
             Image = itemView.findViewById(R.id.img_order);
+            orderCount = itemView.findViewById(R.id.tv_orderCount);
         }
     }
 }
