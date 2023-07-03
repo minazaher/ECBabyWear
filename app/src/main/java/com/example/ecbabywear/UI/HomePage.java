@@ -24,8 +24,8 @@ import com.example.ecbabywear.R;
 import com.example.ecbabywear.Repositories.PiecesRepository;
 import com.example.ecbabywear.UI.Cart;
 import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
+import com.example.ecbabywear.UI.Profile;
 import com.example.ecbabywear.UI.SignIn;
-import com.example.ecbabywear.UI.WishlistActivity;
 import com.example.ecbabywear.Utilis.CategoriesAdapter;
 import com.example.ecbabywear.Utilis.StoreAdapter;
 import com.example.ecbabywear.databinding.ActivityHomePageBinding;
@@ -71,7 +71,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             navigateToActivity(this, OrderHistory.class);
         }
         else if (item.getItemId() ==  R.id.menu_profile){
-            navigateToActivity(this, WishlistActivity.class);
+            navigateToActivity(this, Profile.class);
         }
         return true;
     }
