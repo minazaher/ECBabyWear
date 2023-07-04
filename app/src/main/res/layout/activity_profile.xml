@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="5dp"
+    tools:viewBindingIgnore="false"
     tools:context=".UI.Profile">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
@@ -57,7 +59,7 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <LinearLayout
-                        android:id="@+id/top_navbar"
+                        android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -81,6 +83,7 @@
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <ImageView
+                                    android:id="@+id/back_icon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -123,18 +126,16 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_picture_inner"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         android:layout_marginTop="32dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/top_navbar"
-                        app:srcCompat="@drawable/profile" />
-
+                        app:layout_constraintTop_toBottomOf="@id/toolbar" />
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -142,21 +143,21 @@
                         android:text="Mina Zaher"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                        app:layout_constraintStart_toStartOf="@+id/imageView4"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                        app:layout_constraintEnd_toEndOf="@+id/profile_picture_inner"
+                        app:layout_constraintStart_toStartOf="@+id/profile_picture_inner"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_picture_inner" />
 
                     <TextView
-                        android:id="@+id/textView6"
+                        android:id="@+id/tv_user_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinslight"
                         android:text="menazaher115@gmail.com"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="@+id/textView"
-                        app:layout_constraintStart_toStartOf="@+id/textView"
-                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+                        app:layout_constraintEnd_toEndOf="@+id/tv_user_name"
+                        app:layout_constraintStart_toStartOf="@+id/tv_user_name"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -181,7 +182,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView6">
+                        app:layout_constraintTop_toBottomOf="@+id/tv_user_email">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -189,6 +190,7 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
+                                android:id="@+id/orders_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_margin="10dp"
@@ -212,7 +214,7 @@
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
-                                        app:srcCompat="@drawable/wallet" />
+                                        app:srcCompat="@drawable/wishlist_icon" />
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <TextView
@@ -222,13 +224,14 @@
                                     android:layout_margin="8dp"
                                     android:layout_marginBottom="16dp"
                                     android:fontFamily="@font/poppinsbold"
-                                    android:text="wallet"
+                                    android:text="Orders"
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="13sp" />
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/wishlist_button"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_margin="10dp"
@@ -246,13 +249,14 @@
 
                                     <ImageView
                                         android:id="@+id/imageView9"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:padding="7dp"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toTopOf="parent"
-                                        app:srcCompat="@drawable/notification" />
+                                        app:srcCompat="@drawable/ic_baseline_favorite_24" />
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <TextView
@@ -262,7 +266,7 @@
                                     android:layout_margin="8dp"
                                     android:layout_marginBottom="16dp"
                                     android:fontFamily="@font/poppinsbold"
-                                    android:text="Notification"
+                                    android:text="Wishlist"
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="13sp" />
@@ -318,17 +322,17 @@
                             android:paddingHorizontal="8dp">
 
                             <TextView
-                                android:id="@+id/textView8"
+                                android:id="@+id/tv_change_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppinssemibold"
-                                android:text="@string/password"
+                                android:text="User Name"
                                 android:textColor="@color/Font_Color"
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/textView10"
+                                android:id="@+id/btn_change_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -354,17 +358,17 @@
                             android:paddingHorizontal="8dp">
 
                             <TextView
-                                android:id="@+id/textView55"
+                                android:id="@+id/tv_change_Address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppinssemibold"
-                                android:text="@string/password"
+                                android:text="Maadi - Cairo"
                                 android:textColor="@color/Font_Color"
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/textView17"
+                                android:id="@+id/btn_change_address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -390,7 +394,7 @@
                             android:paddingHorizontal="8dp">
 
                             <TextView
-                                android:id="@+id/textView57"
+                                android:id="@+id/tv_change_password"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -400,7 +404,7 @@
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/textView47"
+                                android:id="@+id/btn_change_Password"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -426,21 +430,21 @@
                             android:paddingHorizontal="8dp">
 
                             <TextView
-                                android:id="@+id/textView45"
+                                android:id="@+id/tv_account_active"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppinssemibold"
-                                android:text="@string/password"
+                                android:text="Active since : 2023"
                                 android:textColor="@color/Font_Color"
                                 android:textSize="18sp" />
 
                             <TextView
-                                android:id="@+id/textView44"
+                                android:id="@+id/btn_delete_Account"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="Change"
+                                android:text="Delete Account"
                                 android:textAlignment="viewEnd"
                                 android:textColor="#5890FF"
                                 android:textSize="18sp" />
@@ -454,18 +458,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_signIn"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/btn_pink"
-                android:layout_margin="24dp"
-                android:layout_gravity="bottom"
-                android:text="Edit Profile"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:fontFamily="@font/poppinssemibold"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout_rememberMe" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

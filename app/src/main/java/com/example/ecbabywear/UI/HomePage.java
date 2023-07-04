@@ -1,9 +1,10 @@
-package com.example.ecbabywear.UI.HomePage;
+package com.example.ecbabywear.UI;
 
 
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -22,13 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.Repositories.PiecesRepository;
-import com.example.ecbabywear.UI.Cart;
 import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
-import com.example.ecbabywear.UI.Profile;
-import com.example.ecbabywear.UI.SignIn;
 import com.example.ecbabywear.Utilis.CategoriesAdapter;
 import com.example.ecbabywear.Utilis.StoreAdapter;
 import com.example.ecbabywear.databinding.ActivityHomePageBinding;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,11 +42,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
         HomePageBinding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(HomePageBinding.getRoot());
         piecesRepository = new PiecesRepository();
-        initializeDrawerLayout();
         initializeCategoriesRecycler();
         initializeNewArrivalsRecycler();
 
@@ -55,6 +52,25 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             navigateToActivity(this, Cart.class);
         });
 
+
+        HomePageBinding.bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.bot_profile:
+                        Intent intent = new Intent(getApplicationContext(), Profile.class);
+                        startActivity(intent);
+                        return true;
+                    case R.id.bot_signout:
+                        Intent intent1 = new Intent(getApplicationContext(), Profile.class);
+                        startActivity(intent1);
+                        firebaseAuth.signOut();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
     }
 
     @Override

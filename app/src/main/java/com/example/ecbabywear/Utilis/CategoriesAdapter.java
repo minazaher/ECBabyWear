@@ -1,4 +1,4 @@
-package com.example.ecbabywear.Model.Utilis;
+package com.example.ecbabywear.Utilis;
 
 import android.content.Context;
 import android.view.LayoutInflater;

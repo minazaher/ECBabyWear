@@ -9,42 +9,42 @@
     android:id="@+id/drawer_layout">
 
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:menu="@menu/navbar_menu"
-        app:headerLayout="@layout/navbar_header"
-        android:layout_gravity="start"
-        app:topInsetScrimEnabled="true"
-        app:itemIconTint="@color/pink_300"
-        android:background="@drawable/et_grey"
-        android:fitsSystemWindows="false"
-        android:elevation="60dp">
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/nav_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:menu="@menu/navbar_menu"-->
+<!--        app:headerLayout="@layout/navbar_header"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:topInsetScrimEnabled="true"-->
+<!--        app:itemIconTint="@color/pink_300"-->
+<!--        android:background="@drawable/et_grey"-->
+<!--        android:fitsSystemWindows="false"-->
+<!--        android:elevation="60dp">-->
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:layout_marginBottom="32dp"
-            android:layout_marginStart="16dp">
-      <ImageView
-          android:layout_width="50dp"
-          android:layout_height="50dp"
-          android:src="@drawable/green_logo"/>
-<!--            <TextView-->
-<!--                android:id="@+id/footer_item_2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:fontFamily="@font/poppinslight"-->
-<!--                android:text="N U N U"-->
-<!--                android:layout_marginBottom="-4dp"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginStart="15dp"-->
-<!--                android:textSize="28sp"/>-->
-        </LinearLayout>
-    </com.google.android.material.navigation.NavigationView>
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginBottom="32dp"-->
+<!--            android:layout_marginStart="16dp">-->
+<!--      <ImageView-->
+<!--          android:layout_width="50dp"-->
+<!--          android:layout_height="50dp"-->
+<!--          android:src="@drawable/green_logo"/>-->
+<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/footer_item_2"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:fontFamily="@font/poppinslight"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="N U N U"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginBottom="-4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_gravity="center_vertical"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginStart="15dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="28sp"/>&ndash;&gt;-->
+<!--        </LinearLayout>-->
+<!--    </com.google.android.material.navigation.NavigationView>-->
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -283,12 +283,12 @@
                 android:backgroundTint="#f6f6f6"
                 android:gravity="bottom"
                 app:fabAlignmentMode="end"
+                app:layout_anchorGravity="end"
                 android:padding="3dp"
                 app:contentInsetStart="0dp"
                 android:animateLayoutChanges="true"
                 app:fabAnimationMode="scale"
                 app:fabCradleMargin="10dp"
-                android:background="@drawable/transparent_background"
                 app:fabCradleRoundedCornerRadius="12dp"
                 app:fabCradleVerticalOffset="4dp">
 
@@ -316,11 +316,9 @@
        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/transparent_background"
         app:menu="@menu/bottom_menu"/>
-
 </RelativeLayout>
 
 

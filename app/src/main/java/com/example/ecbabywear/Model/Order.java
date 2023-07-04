@@ -21,6 +21,9 @@ public class Order {
     public Order() {
     }
 
+    public int getSize(){
+        return this.Items.size();
+    }
     public String getOrderID() {
         return OrderID;
     }

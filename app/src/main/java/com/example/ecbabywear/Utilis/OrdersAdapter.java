@@ -1,4 +1,4 @@
-package com.example.ecbabywear.Model.Utilis;
+package com.example.ecbabywear.Utilis;
 
 import static com.example.ecbabywear.ApplicationClass.cart;
 
@@ -43,7 +43,11 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
         holder.Name.setText(orders.get(position).getItems().get(0).getName());
         holder.Date.setText(orders.get(position).getOrderDate().toString());
         holder.Price.setText("$" +orders.get(position).getTotalPrice());
-        holder.orderCount.setText(orders.get(position).getItems().size()+"items");
+        if (orders.get(position).getItems().size() == 1) {
+            holder.orderCount.setText(orders.get(position).getItems().size() + " item");
+        } else {
+            holder.orderCount.setText(orders.get(position).getItems().size() + " items");
+        }
         Glide.with(context).asBitmap().load(orders.get(position).getItems().get(0).getURL()).into(holder.Image);
         holder.Reorder.setOnClickListener(view -> {
             Intent intent = new Intent(context, Cart.class);

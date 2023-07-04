@@ -1,4 +1,4 @@
-package com.example.ecbabywear.Model.Utilis;
+package com.example.ecbabywear.Utilis;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

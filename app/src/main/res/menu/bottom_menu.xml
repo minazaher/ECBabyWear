@@ -4,28 +4,23 @@
 
     <item
         android:id="@+id/bot_home"
-        android:icon="@drawable/ic_baseline_home_24"
+        android:icon="@drawable/outline_home"
         android:title="Home"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/bot_swap"
-        android:icon="@drawable/ic_outline_swap_vert_24"
-        android:title="Swap"
+        android:id="@+id/bot_profile"
+        android:icon="@drawable/outline_person"
+        android:title="Profile"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/bot_requests"
-        android:icon="@drawable/ic_baseline_sticky_note_2_24"
-        android:title="Requests"
-        app:showAsAction="always" />
-    <item
-
-        android:id="@+id/bot_settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="Settings"
+        android:id="@+id/bot_signout"
+        android:icon="@drawable/ic_baseline_logout_24"
+        android:title="Logout"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/bot_placeholder"
-        android:title="" />
+        android:id="@+id/nothing"
+        android:title=""/>
+
 </menu>

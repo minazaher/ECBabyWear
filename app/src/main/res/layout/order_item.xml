@@ -152,7 +152,7 @@
             android:textColor="@color/pink_400"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_reorder"
+            app:layout_constraintEnd_toStartOf="@id/btn_reorder"
             app:layout_constraintHorizontal_bias="0.225"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

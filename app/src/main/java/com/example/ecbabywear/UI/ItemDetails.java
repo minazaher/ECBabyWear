@@ -44,7 +44,6 @@ public class ItemDetails extends AppCompatActivity {
         Drop = findViewById(R.id.btn_minus_item);
         addToWishList = findViewById(R.id.btn_add_to_wishlist);
         AddToCart = findViewById(R.id.btn_add_to_cart);
-        delete =  findViewById(R.id.delete_btn);
 
         wishlistCheck();
 
@@ -74,15 +73,15 @@ public class ItemDetails extends AppCompatActivity {
             Toast.makeText(this, "Added Successfully!", Toast.LENGTH_SHORT).show();
         });
 
-        delete.setOnClickListener(view -> {
-            String User= firebaseAuth.getCurrentUser().getUid();
-            WishlistRepository wishlistRepository = new WishlistRepository(User);
-            if (wishlistRepository.isInWishlist(getCurrentPiece())){
-                wishlistRepository.DeleteItemFromWishlist(getCurrentPiece());
-            }
-            else
-                Toast.makeText(this, "Item is not in wishlist!", Toast.LENGTH_SHORT).show();
-        });
+//        delete.setOnClickListener(view -> {
+//            String User= firebaseAuth.getCurrentUser().getUid();
+//            WishlistRepository wishlistRepository = new WishlistRepository(User);
+//            if (wishlistRepository.isInWishlist(getCurrentPiece())){
+//                wishlistRepository.DeleteItemFromWishlist(getCurrentPiece());
+//            }
+//            else
+//                Toast.makeText(this, "Item is not in wishlist!", Toast.LENGTH_SHORT).show();
+//        });
 
         addToWishList.setOnClickListener(view -> {
             String User= firebaseAuth.getCurrentUser().getUid();

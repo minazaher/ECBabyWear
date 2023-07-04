@@ -1,4 +1,4 @@
-package com.example.ecbabywear.Model.Utilis;
+package com.example.ecbabywear.Utilis;
 
 import static com.example.ecbabywear.ApplicationClass.currentPiece;
 

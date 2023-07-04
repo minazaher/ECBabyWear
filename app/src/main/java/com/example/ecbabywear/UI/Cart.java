@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.Repositories.OrderRepository;
-import com.example.ecbabywear.UI.HomePage.HomePage;
 import com.example.ecbabywear.Utilis.CartAdapter;
 import com.example.ecbabywear.Utilis.OnDataChangedListener;
 import com.example.ecbabywear.databinding.ActivityCartBinding;
@@ -65,9 +64,9 @@ public class Cart extends AppCompatActivity implements OnDataChangedListener {
 
     }
     private void showOrderInfo(){
-        activityCartBinding.itemsTotalPrice.setText(TotalPriceBeforeTaxes.toString() + " L.E");
-        activityCartBinding.TotalPrice.setText(Total.toString() + " L.E");
-        activityCartBinding.Tax.setText(Tax.toString() + " L.E");
+        activityCartBinding.itemsTotalPrice.setText("$" +TotalPriceBeforeTaxes.toString() );
+        activityCartBinding.TotalPrice.setText("$" +Total.toString());
+        activityCartBinding.Tax.setText("$" +Tax.toString() );
 
     }
 

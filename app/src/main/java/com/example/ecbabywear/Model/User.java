@@ -6,6 +6,8 @@ public class User {
     private String Name;
     private String Email;
     private String Password;
+    private String profilePicture;
+    private String Address;
     private ArrayList<Order> OrdersHistory;
     private ArrayList<Request> Requests;
     private Wishlist wishlist;
@@ -20,12 +22,30 @@ public class User {
         this.wishlist = new Wishlist();
     }
 
+    public User(String name, String email, String password, String profilePicture, String address) {
+        Name = name;
+        Email = email;
+        Password = password;
+        this.profilePicture = profilePicture;
+        this.wishlist = new Wishlist();
+        this.Address = address;
+
+    }
+
     public User(String name, String email, String password, ArrayList<Order> ordersHistory, ArrayList<Request> requests) {
         Name = name;
         Email = email;
         Password = password;
         OrdersHistory = ordersHistory;
         Requests = requests;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getName() {
@@ -66,5 +86,13 @@ public class User {
 
     public void setRequests(ArrayList<Request> requests) {
         Requests = requests;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
     }
 }
