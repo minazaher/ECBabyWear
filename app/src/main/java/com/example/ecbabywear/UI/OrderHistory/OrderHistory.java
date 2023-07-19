@@ -5,12 +5,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.Repositories.OrderRepository;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
 
 public class OrderHistory extends AppCompatActivity {
     private TabLayout tabLayout;
@@ -18,7 +16,6 @@ public class OrderHistory extends AppCompatActivity {
     private ViewPager viewPager;
     OrderRepository orderRepository;
     OrderHistoryFragment completedOrdersFragment;
-    ArrayList<Order> confirmedOrders, cancelledOrders;
     CanceledOrderHistoryFragment canceledOrderHistoryFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

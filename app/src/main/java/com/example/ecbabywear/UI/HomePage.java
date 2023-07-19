@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,14 +22,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecbabywear.Model.Category;
+import com.example.ecbabywear.Piece;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.Repositories.PiecesRepository;
 import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
 import com.example.ecbabywear.Utilis.CategoriesAdapter;
+import com.example.ecbabywear.Utilis.OnCategoriesRetrieved;
+import com.example.ecbabywear.Utilis.PiecesCallback;
 import com.example.ecbabywear.Utilis.StoreAdapter;
 import com.example.ecbabywear.databinding.ActivityHomePageBinding;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,6 +45,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     NavigationView navigationView;
     ActivityHomePageBinding HomePageBinding;
     DrawerLayout drawerLayout;
+    ShimmerFrameLayout shimmerFrameLayout;
+    RelativeLayout homeLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -44,8 +54,10 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         HomePageBinding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(HomePageBinding.getRoot());
+
+        homeLayout = findViewById(R.id.home_page);
         piecesRepository = new PiecesRepository();
-        initializeCategoriesRecycler();
+
         initializeNewArrivalsRecycler();
 
         HomePageBinding.fabCart.setOnClickListener((View view) -> {
@@ -75,9 +87,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            drawerLayout.closeDrawer(GravityCompat.START);
-        else
             showSignOutMessage();
     }
 
@@ -101,29 +110,37 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
 
 
-    private void initializeDrawerLayout(){
-        drawerLayout = HomePageBinding.drawerLayout;
-        navigationView = HomePageBinding.navView;
-        setSupportActionBar(HomePageBinding.toolbar);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,HomePageBinding.toolbar, R.string.nav_open, R.string.nav_close);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.bringToFront();
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-    }
+//    private void initializeDrawerLayout(){
+//        drawerLayout = HomePageBinding.drawerLayout;
+//        navigationView = HomePageBinding.navView;
+//        setSupportActionBar(HomePageBinding.toolbar);
+//        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,HomePageBinding.toolbar, R.string.nav_open, R.string.nav_close);
+//        navigationView.setNavigationItemSelectedListener(this);
+//        navigationView.bringToFront();
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+//        actionBarDrawerToggle.syncState();
+//    }
 
     private void initializeCategoriesRecycler() {
         Categories = HomePageBinding.catsRecview;
-        Categories.setAdapter(new CategoriesAdapter(this));
-        Categories.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        piecesRepository.getCategories(categories -> {
+            Categories.setAdapter(new CategoriesAdapter(categories,getApplicationContext()));
+            Categories.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false));
+        });
     }
 
     private void initializeNewArrivalsRecycler() {
+        shimmerFrameLayout = findViewById(R.id.shimmer);
+        shimmerFrameLayout.startShimmer();
         newArrivals = HomePageBinding.storeRecview;
         newArrivals.setNestedScrollingEnabled(false);
         newArrivals.setLayoutManager(CustomGridLayout());
         piecesRepository.getPieceMutableLiveData(
                 newArrivalList -> {
+                    shimmerFrameLayout.stopShimmer();
+                    shimmerFrameLayout.setVisibility(View.GONE);
+                    homeLayout.setVisibility(View.VISIBLE);
+                    initializeCategoriesRecycler();
                     StoreAdapter storeAdapter = new StoreAdapter(this,newArrivalList);
                     newArrivals.setAdapter(storeAdapter);
                 });

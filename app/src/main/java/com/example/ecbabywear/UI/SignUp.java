@@ -172,21 +172,18 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void uploadImage(){
-        FirebaseStorage.getInstance().getReference().child("/images" + UUID.randomUUID().toString()).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if (task.isSuccessful()){
-                    task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()){
-                                profilePicture = task1.getResult().toString();
-                            }
-                    });
-                }
-                else {
-
-                }
+        FirebaseStorage.getInstance().getReference().child("/images" + UUID.randomUUID().toString()).putFile(imageUri).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
+                task.getResult().getStorage().getDownloadUrl().addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()){
+                            profilePicture = task1.getResult().toString();
+                        }
+                });
+            }
+            else {
 
             }
+
         }).addOnProgressListener(snapshot -> {
             double progress = 100.0 * snapshot.getBytesTransferred()/ snapshot.getTotalByteCount();
             ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());

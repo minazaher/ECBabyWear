@@ -32,6 +32,8 @@ public class Piece {
         LongDescription = longDescription;
     }
 
+
+
     public Piece(String name, String URL, String price, String shortDescription, String longDescription, String status) {
         Name = name;
         this.URL = URL;

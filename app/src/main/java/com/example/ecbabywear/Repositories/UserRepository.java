@@ -2,6 +2,9 @@ package com.example.ecbabywear.Repositories;
 
 import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.ecbabywear.Model.User;
 import com.example.ecbabywear.Utilis.UserRetrievedCallback;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -12,20 +15,20 @@ public class UserRepository {
 
     }
 
-    public void getCurrentUser(String email, UserRetrievedCallback callback) {
-        User user = new User();
+    public LiveData<User> getCurrentUser(String email) {
+        MutableLiveData<User> user = new MutableLiveData<>();
         firebaseFirestore.collection("Users").whereEqualTo("Email", email)
                 .get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        User user1 = new User();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            user.setName(document.getString("Name"));
-                            user.setEmail(document.getString("Email"));
-                            user.setPassword(document.getString("Password"));
-                            user.setProfilePicture(document.getString("profilePicture"));
-                            user.setAddress(document.getString("Address"));
-
+                            user1.setName(document.getString("Name"));
+                            user1.setEmail(document.getString("Email"));
+                            user1.setPassword(document.getString("Password"));
+                            user1.setProfilePicture(document.getString("profilePicture"));
+                            user1.setAddress(document.getString("Address"));
+                            user.setValue(user1);
                         }
-                        callback.onUserRetrieved(user);
 
                     } else {
                         System.out.println("Error getting documents: "+ task.getException());
@@ -33,6 +36,7 @@ public class UserRepository {
                 }).addOnFailureListener(e -> {
                     System.out.println("Error getting user data"+ e);
                 });
+        return user;
     }
 
     public void updateUsername(String id,String newName){

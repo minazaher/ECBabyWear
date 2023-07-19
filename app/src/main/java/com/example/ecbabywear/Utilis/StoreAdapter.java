@@ -13,11 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Piece;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.UI.ItemDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.viewholder> {
@@ -26,6 +28,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.viewholder> 
     public StoreAdapter(Context context, List<Piece> pieceArrayList) {
         this.context = context;
         this.pieceArrayList = pieceArrayList;
+        notifyDataSetChanged();
+    }
+
+    public void setPieceArrayList(List<Piece> pieceArrayList) {
+        this.pieceArrayList = pieceArrayList;
+        notifyDataSetChanged();
     }
 
     public StoreAdapter(Context context) {
@@ -48,7 +56,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.viewholder> 
         holder.tv_Name.setText(pieceArrayList.get(position).getName());
         holder.tv_ShortDescription.setText(pieceArrayList.get(position).getShortDescription());
         holder.tv_Price.setText(pieceArrayList.get(position).getPrice());
-        Glide.with(context).asBitmap().load(pieceArrayList.get(position).getURL()).into(holder.img);
+        Glide.with(context).
+                asBitmap().
+                load(pieceArrayList.get(position).getURL()).
+                diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.img);
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ItemDetails.class);
             ApplicationClass.currentPiece = pieceArrayList.get(holder.getAdapterPosition());
@@ -62,11 +73,22 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.viewholder> 
     }
 
 
-    public void updatePiecesList(final List<Piece> userArrayList) {
+    public void updatePiecesList(final List<Piece> searchList) {
         this.pieceArrayList.clear();
-        this.pieceArrayList = userArrayList;
+        this.pieceArrayList = searchList;
         notifyDataSetChanged();
     }
+
+//    public void filterData(String query) {
+//        List<Piece> filteredData = new ArrayList<>();
+//        for (Piece data : pieceArrayList) {
+//            if (data.matchesQuery(query)) {
+//                filteredData.add(data);
+//            }
+//        }
+//        currentData = filteredData;
+//        notifyDataSetChanged();
+//    }
 
     public class viewholder extends RecyclerView.ViewHolder {
 

@@ -65,7 +65,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.mViewHolder> {
             holder.counter.setText(String.valueOf(CartPieces.get(position).getItemQuantity()));
             holder.tv_cart_itemPrice.setText(CartPieces.get(position).getItemPrice().toString());
             this.onDataChangeListener.onDataChanged();
-
         });
 
 

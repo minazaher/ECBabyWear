@@ -1,4 +1,4 @@
-package com.example.ecbabywear.ViewModel;
+package com.example.ecbabywear;
 
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 

@@ -79,7 +79,7 @@ public class OrderRepository {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             if (Objects.equals(document.get("Status"), "Cancelled"))
                                 cancelledOrders.add(document.toObject(Order.class));
-                            System.out.println("Canclled: " + cancelledOrders);
+                            System.out.println("Cancelled: " + cancelledOrders);
                         }
                         listener.onOrdersRetrieved(cancelledOrders);
                     } else {

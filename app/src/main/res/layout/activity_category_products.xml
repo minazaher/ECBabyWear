@@ -4,6 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.CategoryProducts">
+    tools:context=".UI.CategoryDetails.CategoryProducts"
+    tools:viewBindingIgnore="false">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/products_search"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="5"
+        android:background="@drawable/search_et"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:foregroundGravity="center_vertical"
+        android:hint="Search For Something"
+        android:paddingHorizontal="10dp"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/category_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/products_search"
+        app:layout_constraintVertical_bias="0.033"
+        app:tabTextColor="@color/black"
+        tools:layout_editor_absoluteX="-16dp" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/category_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_tabLayout"
+        app:tabBackground="@drawable/tab_background"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

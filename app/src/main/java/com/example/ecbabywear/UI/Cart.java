@@ -1,9 +1,11 @@
 package com.example.ecbabywear.UI;
 
 import static com.example.ecbabywear.ApplicationClass.cart;
+import static com.example.ecbabywear.ApplicationClass.cartPrice;
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecbabywear.ApplicationClass;
 import com.example.ecbabywear.Model.CartItem;
 import com.example.ecbabywear.Model.Order;
 import com.example.ecbabywear.Repositories.OrderRepository;
@@ -29,7 +32,6 @@ public class Cart extends AppCompatActivity implements OnDataChangedListener {
     ActivityCartBinding activityCartBinding;
     Double ItemPrice  , TotalPriceBeforeTaxes = 0.0, Tax , DeliveryServices = 20.0, Total = 0.0;
     DecimalFormat df = new DecimalFormat("0.00");
-    DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT);
     FirebaseUser user;
     OrderRepository orderRepository;
     @Override
@@ -49,20 +51,13 @@ public class Cart extends AppCompatActivity implements OnDataChangedListener {
 
         activityCartBinding.btnCheckout
                 .setOnClickListener(view -> {
-                    checkout();
+                    Intent intent = new Intent(this, Checkout.class);
+                    intent.putExtra("totalPrice", calculateTotalPrice());
+                    startActivity(intent);
                 });
 
     }
 
-
-    private void checkout(){
-        String date = dateFormat.format(new Date());
-        Order order = new Order(user.getUid(), cart,date, Total.toString(), "Completed");
-        orderRepository.addOrderToDatabase(order);
-        cart.clear();
-        navigateToActivity(Cart.this, HomePage.class);
-
-    }
     private void showOrderInfo(){
         activityCartBinding.itemsTotalPrice.setText("$" +TotalPriceBeforeTaxes.toString() );
         activityCartBinding.TotalPrice.setText("$" +Total.toString());
@@ -70,9 +65,10 @@ public class Cart extends AppCompatActivity implements OnDataChangedListener {
 
     }
 
-    private double calculateTotalPrice(){
+    public double calculateTotalPrice(){
         double price = 0.0;
         price = calculateTotalPriceBeforeTax() + calculateTaxes() + DeliveryServices;
+        ApplicationClass.cartPrice = price;
         return price;
     }
 
@@ -118,6 +114,9 @@ public class Cart extends AppCompatActivity implements OnDataChangedListener {
                 Total = calculateTotalPrice();
                 showOrderInfo();
                 adapter.notifyItemRemoved(position);
+                if (cart.isEmpty()){
+                    showCart();
+                }
             }
         };
 
@@ -148,6 +147,7 @@ public class Cart extends AppCompatActivity implements OnDataChangedListener {
     @Override
     public void onDataChanged() {
         Total = calculateTotalPrice();
+        cartPrice = Total;
         showOrderInfo();
     }
 }

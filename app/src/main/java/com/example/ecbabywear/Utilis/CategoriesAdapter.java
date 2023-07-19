@@ -1,6 +1,7 @@
 package com.example.ecbabywear.Utilis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.ecbabywear.Model.Category;
 import com.example.ecbabywear.R;
+import com.example.ecbabywear.UI.CategoryDetails.CategoryProducts;
+
+import java.util.List;
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.viewholder> {
     Context context;
+    List<Category> categories;
 
-    public CategoriesAdapter(Context context) {
+    public CategoriesAdapter(List<Category> categories,Context context) {
+        this.categories = categories;
         this.context = context;
     }
 
@@ -29,8 +37,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.vi
 
     @Override
     public void onBindViewHolder(@NonNull CategoriesAdapter.viewholder holder, int position) {
-        holder.Name.setText("Suit");
-        holder.Image.setImageResource(R.drawable.category);
+        holder.Name.setText(categories.get(position).getName());
+        Glide.with(context).asBitmap().load(categories.get(position).getURL()).into(holder.Image);
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, CategoryProducts.class);
+            intent.putExtra("tabIndex", position);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        });
     }
 
     @Override

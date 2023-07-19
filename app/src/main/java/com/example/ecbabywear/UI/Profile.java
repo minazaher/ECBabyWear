@@ -10,18 +10,19 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.bumptech.glide.Glide;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.Repositories.UserRepository;
 import com.example.ecbabywear.UI.OrderHistory.OrderHistory;
+import com.example.ecbabywear.UserViewModel;
 import com.example.ecbabywear.databinding.ActivityProfileBinding;
 
 public class Profile extends AppCompatActivity {
     ActivityProfileBinding activityProfileBinding ;
     UserRepository userRepository;
     ImageView profile;
-
+    UserViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +32,10 @@ public class Profile extends AppCompatActivity {
         profile = findViewById(R.id.profile_picture_inner);
         userRepository = new UserRepository();
 
-        initializeUserData();
+        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        activityProfileBinding.setViewmodel(viewModel);
+        activityProfileBinding.setLifecycleOwner(this);
+
 
         activityProfileBinding.backIcon.setOnClickListener(view ->navigateToActivity(Profile.this, HomePage.class));
 
@@ -65,16 +69,6 @@ public class Profile extends AppCompatActivity {
         builder.show();
     }
 
-    private void initializeUserData(){
-        userRepository.getCurrentUser(firebaseAuth.getCurrentUser().getEmail(), user -> {
-            activityProfileBinding.tvUserName.setText(user.getName());
-            activityProfileBinding.tvChangeName.setText((user.getName()));
-            activityProfileBinding.tvUserEmail.setText(user.getEmail());
-            activityProfileBinding.tvChangeAddress.setText(user.getAddress());
-            Glide.with(getApplicationContext()).asBitmap().load(user.getProfilePicture()).into(profile);
-        });
-
-    }
     private void verifyPasswordReset(){
         new AlertDialog.Builder(this)
                 .setTitle("Exit")
@@ -85,6 +79,7 @@ public class Profile extends AppCompatActivity {
                     showPasswordResetNotification();
                 }).create().show();
     }
+
     private void showPasswordResetNotification(){
         new AlertDialog.Builder(this)
                 .setMessage("check Your email")

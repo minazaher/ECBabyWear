@@ -45,7 +45,7 @@ public class OrderHistoryFragment extends Fragment {
         orderRepository.getConfirmedOrdersByUser(firebaseUser, orders -> {
             RecyclerView ordersRecyclerView = (RecyclerView) view.findViewById(R.id.orders_recylerview);
             confirmedOrders = (ArrayList<Order>) orders;
-            OrdersAdapter adapter = new OrdersAdapter(confirmedOrders, this.getContext());
+            OrdersAdapter adapter = new OrdersAdapter((ArrayList<Order>) orders, this.getContext());
             ordersRecyclerView.setAdapter(adapter);
             ordersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         });

@@ -1,22 +1,16 @@
-package com.example.ecbabywear.UI;
+package com.example.ecbabywear.UI.CategoryDetails;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
 import com.example.ecbabywear.Piece;
-import com.example.ecbabywear.R;
 import com.example.ecbabywear.Repositories.PiecesRepository;
-import com.example.ecbabywear.UI.OrderHistory.CanceledOrderHistoryFragment;
-import com.example.ecbabywear.UI.OrderHistory.FragmentAdapter;
+import com.example.ecbabywear.UI.CategoryDetails.CategoryFragment;
 import com.example.ecbabywear.Utilis.PagerAdapter;
 import com.example.ecbabywear.databinding.ActivityCategoryProductsBinding;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;

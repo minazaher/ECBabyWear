@@ -28,6 +28,25 @@ public class WishlistRepository {
         this.userId = userId;
     }
 
+    public LiveData<List<Piece>> getWishlist() {
+        MutableLiveData<List<Piece>> wishlistData = new MutableLiveData<>();
+        firebaseFirestore.collection("Wishlist")
+                .whereEqualTo("wishlistId", userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            List<Map<String, Object>> pieces = (List<Map<String, Object>>) document.get("items");
+                            List<Piece> pieceList = mapToPiece(pieces);
+                            wishlistData.setValue(pieceList);
+                        }
+                    } else {
+                        System.out.println("Error 404 Wishlist Not found!!");
+                    }
+                });
+        return wishlistData;
+    }
+
 
     public void CreateWishlist(String userId){
         Map<String, Object> wishlist = new HashMap<>();
@@ -91,24 +110,6 @@ public class WishlistRepository {
                 });
     }
 
-    public LiveData<List<Piece>> getWishlist() {
-        MutableLiveData<List<Piece>> wishlistData = new MutableLiveData<>();
-        firebaseFirestore.collection("Wishlist")
-                .whereEqualTo("wishlistId", userId)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            List<Map<String, Object>> pieces = (List<Map<String, Object>>) document.get("items");
-                            List<Piece> pieceList = mapToPiece(pieces);
-                            wishlistData.setValue(pieceList);
-                        }
-                    } else {
-                        System.out.println("Error 404 Wishlist Not found!!");
-                    }
-                });
-        return wishlistData;
-    }
 
     private List<Piece> mapToPiece(List<Map<String, Object>> pieces) {
         List<Piece> pieceList = new ArrayList<>();

@@ -1,7 +1,9 @@
-package com.example.ecbabywear.UI;
+package com.example.ecbabywear.UI.CategoryDetails;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +16,6 @@ import androidx.appcompat.widget.SearchView;
 import com.example.ecbabywear.Piece;
 import com.example.ecbabywear.R;
 import com.example.ecbabywear.Repositories.PiecesRepository;
-import com.example.ecbabywear.Utilis.PiecesCallback;
 import com.example.ecbabywear.Utilis.StoreAdapter;
 import com.example.ecbabywear.databinding.FragmentCategoryBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -27,20 +28,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+
+
 public class CategoryFragment extends Fragment {
 
     private static final String CATEGORY= "category";
     PiecesRepository piecesRepository;
     SearchView searchView ;
-            FragmentCategoryBinding fragment;
+    FragmentCategoryBinding fragment;
     private String category;
     StoreAdapter adapter;
     Query query ;
+
     public CategoryFragment() {
         piecesRepository = new PiecesRepository();
     }
@@ -53,15 +53,40 @@ public class CategoryFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             category = getArguments().getString(CATEGORY);
         }
-
         searchView = getActivity().findViewById(R.id.products_search);
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        fragment = FragmentCategoryBinding.inflate(getLayoutInflater(), container, false);
+        piecesRepository.getShoesMutableLiveDataByCategory(category, arrivalsList -> {
+            RecyclerView ShoesRecView = (RecyclerView) fragment.categoryProductsRecview;
+            adapter = new StoreAdapter(getContext(), arrivalsList);
+            ShoesRecView.setAdapter(adapter);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+            ShoesRecView.setLayoutManager(gridLayoutManager);
+        });
+
+        return fragment.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Search();
+    }
+
+    public void Search(){
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference childRef = rootRef.child(category);
         query = childRef.orderByChild("name");
@@ -80,7 +105,6 @@ public class CategoryFragment extends Fragment {
                         List<Piece> items = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Piece item = snapshot.getValue(Piece.class);
-                            System.out.println(item);
                             items.add(item);
                         }
                         adapter.updatePiecesList(items);
@@ -94,29 +118,5 @@ public class CategoryFragment extends Fragment {
             }
         });
 
-
-
-
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        fragment = FragmentCategoryBinding.inflate(getLayoutInflater(), container, false);
-        piecesRepository.getShoesMutableLiveDataByCategory(category, arrivalsList -> {
-            RecyclerView ShoesRecView = (RecyclerView) fragment.categoryProductsRecview;
-            adapter = new StoreAdapter(getContext(), arrivalsList);
-            ShoesRecView.setAdapter(adapter);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-            ShoesRecView.setLayoutManager(gridLayoutManager);
-        });
-
-        return fragment.getRoot();
-
-
-    }
-
-
 }
-
