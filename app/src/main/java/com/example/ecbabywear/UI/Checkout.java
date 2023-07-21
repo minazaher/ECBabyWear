@@ -5,7 +5,14 @@ import static com.example.ecbabywear.ApplicationClass.cartPrice;
 import static com.example.ecbabywear.ApplicationClass.firebaseAuth;
 import static com.example.ecbabywear.ApplicationClass.navigateToActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -17,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +48,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import com.example.ecbabywear.R;
 
@@ -61,17 +71,24 @@ public class Checkout extends AppCompatActivity implements OnDataChangedListener
 
         Binding = ActivityCheckoutBinding.inflate(getLayoutInflater());
         setContentView(Binding.getRoot());
-
+        Binding.checkoutToolbar.textView11.setText("Checkout");
         orderRepository = new OrderRepository(firebaseAuth.getCurrentUser().getUid());
         stripe = new Stripe(getApplicationContext(),
                 "pk_test_51NR7UYDNDAkufzaAXcN5keXddWnchfuIjmJ8tjpnFPDgeLDjLaf4OkaM4bD7dDM9pKbUNE9SITtw7r1LZBvLruoJ00rp2XpCYd");
+
+        Binding.cityLocation.setText("Pick Your location");
+        Binding.countryLocation.setText("");
 
         payButton = findViewById(R.id.pay_button);
         payButton.setOnClickListener(this::onPayClicked);
         payButton.setEnabled(false);
         InitializeCartRecView();
         paymentSheet = new PaymentSheet(this, this::onPaymentSheetResult);
-
+        Binding.btnGetLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUserLocation();}
+        });
         try {
             fetchPaymentIntent();
         } catch (JSONException e) {
@@ -79,7 +96,49 @@ public class Checkout extends AppCompatActivity implements OnDataChangedListener
         }
 
     }
-    private void showAlert(String title, @Nullable String message) {
+
+    private void updateUserLocation() {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions
+                    (this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                            1);
+        } else {
+            Location location = locationManager.getLastKnownLocation(locationManager.getAllProviders().get(2));
+            System.out.println("location: " + location);
+            if (location != null) {
+                Geocoder geocoder = new Geocoder(this,
+                        Locale.getDefault());
+                try {
+                    List<Address> addresses =
+                            geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    if (addresses.size() > 0) {
+                        String city = addresses.get(0).getLocality();
+                        String country = addresses.get(0).getCountryName();
+                        String govern = addresses.get(0).getAdminArea();
+                        String formattedLocation = String.format("%s, %s", city, govern);
+                        System.out.println(addresses.toString());
+                        System.out.println(formattedLocation);
+                        System.out.println("Address line :" + addresses.get(0).getAddressLine(0) );
+                        System.out.println("Address line1 :" + addresses.get(0).getAddressLine(1) );
+                        System.out.println("Address line2:" + addresses.get(0).getAddressLine(2) );
+
+                        Binding.cityLocation.setText(formattedLocation);
+                        Binding.countryLocation.setText(country);
+                    }
+                } catch (IOException e) {
+                }
+            } else {
+                System.out.println("Providers: " + locationManager.getAllProviders());
+            }
+
+        }
+
+    }
+
+
+        private void showAlert(String title, @Nullable String message) {
         runOnUiThread(() -> {
             AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(title)
