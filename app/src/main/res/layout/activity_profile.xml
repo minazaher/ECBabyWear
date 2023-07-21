@@ -376,7 +376,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:fontFamily="@font/poppinssemibold"
-                                        android:text="@{viewmodel.currentUser.address}"
+                                        android:text="@{viewmodel.currentUser.address.toString()}"
                                         android:textColor="@color/Font_Color"
                                         android:textSize="18sp" />
 

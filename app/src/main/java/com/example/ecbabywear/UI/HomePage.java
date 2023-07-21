@@ -119,7 +119,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 //        navigationView.bringToFront();
 //        drawerLayout.addDrawerListener(actionBarDrawerToggle);
 //        actionBarDrawerToggle.syncState();
-//    }
+//    }00
 
     private void initializeCategoriesRecycler() {
         Categories = HomePageBinding.catsRecview;

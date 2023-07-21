@@ -62,7 +62,7 @@ public class Checkout extends AppCompatActivity implements OnDataChangedListener
         Binding = ActivityCheckoutBinding.inflate(getLayoutInflater());
         setContentView(Binding.getRoot());
 
-        orderRepository = new OrderRepository();
+        orderRepository = new OrderRepository(firebaseAuth.getCurrentUser().getUid());
         stripe = new Stripe(getApplicationContext(),
                 "pk_test_51NR7UYDNDAkufzaAXcN5keXddWnchfuIjmJ8tjpnFPDgeLDjLaf4OkaM4bD7dDM9pKbUNE9SITtw7r1LZBvLruoJ00rp2XpCYd");
 

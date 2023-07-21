@@ -50,21 +50,21 @@ public class ItemDetails extends AppCompatActivity {
         C = Integer.parseInt(Count.getText().toString());
         Name.setText(currentPiece.getName());
         Description.setText(currentPiece.getLongDescription());
-        Price.setText(currentPiece.getPrice() + " L.E");
+        Price.setText(currentPiece.getPrice() + " $");
         Glide.with(this).asBitmap().load(currentPiece.getURL()).into(img);
 
         Add.setOnClickListener(view -> {
             C += 1;
             Count.setText(String.valueOf(C));
             price = Double.parseDouble(currentPiece.getPrice()) * C;
-            Price.setText( price.toString()  +" L.E");
+            Price.setText( price.toString()  + " $");
         });
         Drop.setOnClickListener(view -> {
             if (C != 0) {
                 C-=1;
                 Count.setText(String.valueOf(C));
                 price = Double.parseDouble(currentPiece.getPrice()) * C;
-                Price.setText( price.toString()  +" L.E");            }
+                Price.setText( price.toString()  +" $");            }
         });
 
         AddToCart.setOnClickListener(view -> {
@@ -103,6 +103,7 @@ public class ItemDetails extends AppCompatActivity {
         else
             addToWishList.setImageResource(R.drawable.ic_baseline_favorite_24);
     }
+
     private Map<String, Object> getCurrentPiece(){
         Map<String, Object> piece = new HashMap<>();
         piece.put("name", currentPiece.getName());

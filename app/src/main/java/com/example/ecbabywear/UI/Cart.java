@@ -39,7 +39,7 @@ public class Cart extends AppCompatActivity implements OnDataChangedListener {
         super.onCreate(savedInstanceState);
         activityCartBinding = ActivityCartBinding.inflate(getLayoutInflater());
         setContentView(activityCartBinding.getRoot());
-        orderRepository = new OrderRepository();
+        orderRepository = new OrderRepository(firebaseAuth.getCurrentUser().getUid());
         user = firebaseAuth.getCurrentUser();
         activityCartBinding.toolbar.textView11.setText("My Cart");
 

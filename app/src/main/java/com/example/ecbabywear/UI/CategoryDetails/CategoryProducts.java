@@ -25,17 +25,6 @@ public class CategoryProducts extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.include.textView11.setText("Browse Products");
-        binding.productsSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
 
         piecesRepository =  new PiecesRepository();
 
@@ -60,22 +49,5 @@ public class CategoryProducts extends AppCompatActivity {
         new TabLayoutMediator(binding.categoryTabLayout, binding.categoryViewPager, (tab, position) ->
                 tab.setText(categories.get(position))).attach();
     }
-//
-//    public void onSearch(String query) {
-//        ViewPager2 viewPager = binding.categoryViewPager;
-//        PagerAdapter adapter = (PagerAdapter) viewPager.getAdapter();
-//        CategoryFragment myFragment = (CategoryFragment) adapter.getCurrentFragment(viewPager.getCurrentItem());
-//        myFragment.filterData(query);
-//    }
 
-
-    public void searchList(String name){
-        ArrayList<Piece> searchList = new ArrayList<>();
-
-        for (Piece p :searchList) {
-            if(p.getName().toLowerCase().contains(name.toLowerCase())){
-                searchList.add(p);
-            }
-        }
-    }
 }

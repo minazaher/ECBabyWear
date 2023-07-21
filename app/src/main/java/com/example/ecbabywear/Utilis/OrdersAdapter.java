@@ -22,11 +22,12 @@ import com.example.ecbabywear.UI.Cart;
 import java.util.ArrayList;
 
 public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolder> {
-    ArrayList<Order> orders = new ArrayList<>();
+    ArrayList<Order> orders;
     Context context;
 
 
     public OrdersAdapter(ArrayList<Order> orders, Context context) {
+        System.out.println("Orders from Adapter :" + orders.toString());
         this.orders = orders;
         this.context = context;
     }
@@ -40,14 +41,18 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.mViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull mViewHolder holder, int position) {
+        System.out.println(orders.get(0));
         holder.Name.setText(orders.get(position).getItems().get(0).getName());
         holder.Date.setText(orders.get(position).getOrderDate().toString());
         holder.Price.setText("$" +orders.get(position).getTotalPrice());
+
+
         if (orders.get(position).getItems().size() == 1) {
             holder.orderCount.setText(orders.get(position).getItems().size() + " item");
         } else {
             holder.orderCount.setText(orders.get(position).getItems().size() + " items");
         }
+
         Glide.with(context).asBitmap().load(orders.get(position).getItems().get(0).getURL()).into(holder.Image);
         holder.Reorder.setOnClickListener(view -> {
             Intent intent = new Intent(context, Cart.class);

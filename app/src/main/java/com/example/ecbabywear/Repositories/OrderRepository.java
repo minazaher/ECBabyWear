@@ -3,6 +3,7 @@ package com.example.ecbabywear.Repositories;
 import static com.example.ecbabywear.ApplicationClass.databaseReference;
 import static com.example.ecbabywear.ApplicationClass.firebaseFirestore;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ecbabywear.Model.Order;
@@ -10,6 +11,7 @@ import com.example.ecbabywear.Piece;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -20,18 +22,17 @@ import java.util.Map;
 import java.util.Objects;
 
 public class OrderRepository {
-    MutableLiveData<List<Piece>> ordersListMutableLiveData;
-    MutableLiveData<Piece> orderMutableLiveData;
 
-    public OrderRepository() {
-        this.orderMutableLiveData = new MutableLiveData<>();
-        this.ordersListMutableLiveData = new MutableLiveData<>();
+    private FirebaseFirestore db;
+    private String userId;
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Orders");
+    public OrderRepository(String userId) {
+        this.userId = userId;
+        this.db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
-        firebaseFirestore.setFirestoreSettings(settings);
+        db.setFirestoreSettings(settings);
     }
 
     public void addOrderToDatabase(Order order){
@@ -47,49 +48,27 @@ public class OrderRepository {
 
     }
 
-    public List<Order> getConfirmedOrdersByUser(FirebaseUser user, OnOrdersRetrievedListener listener){
-        List<Order> confirmedOrders = new ArrayList<>();
+    public LiveData<List<Order>> getUserOrdersByStatus(String Status){
+        MutableLiveData<List<Order>> orders = new MutableLiveData<>();
         firebaseFirestore.collection("Orders")
-                .whereEqualTo("orderID", user.getUid())
+                .whereEqualTo("orderID", userId)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        List<Order> ordersList = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            if (Objects.equals(document.get("Status"), "Completed"))
-                                confirmedOrders.add(document.toObject(Order.class));
+                            if (Objects.equals(document.get("Status"), Status)){
+                                ordersList.add(document.toObject(Order.class));
+                            }
                         }
-                        listener.onOrdersRetrieved(confirmedOrders);
-                        System.out.println("Confirmed : "+ confirmedOrders);
+                        System.out.println("The third order is :" + ordersList.get(2));
+                        orders.setValue(ordersList);
                     } else {
                         System.out.println("Error getting documents: " + task.getException());
                     }
                 });
-        return confirmedOrders;
+        return orders;
     }
 
-
-    public void getCancelledOrdersByUser(FirebaseUser user, OnOrdersRetrievedListener listener) {
-        List<Order> cancelledOrders = new ArrayList<>();
-
-        firebaseFirestore.collection("Orders")
-                .whereEqualTo("orderID", user.getUid())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            if (Objects.equals(document.get("Status"), "Cancelled"))
-                                cancelledOrders.add(document.toObject(Order.class));
-                            System.out.println("Cancelled: " + cancelledOrders);
-                        }
-                        listener.onOrdersRetrieved(cancelledOrders);
-                    } else {
-                        System.out.println("Error getting documents: " + task.getException());
-                    }
-                });
-    }
-
-    public interface OnOrdersRetrievedListener {
-        void onOrdersRetrieved(List<Order> orders);
-    }
 
 }

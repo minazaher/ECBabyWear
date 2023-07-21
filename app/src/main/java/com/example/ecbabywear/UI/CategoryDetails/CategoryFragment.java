@@ -37,7 +37,7 @@ public class CategoryFragment extends Fragment {
     PiecesRepository piecesRepository;
     SearchView searchView ;
     FragmentCategoryBinding fragment;
-    private String category;
+    String category;
     StoreAdapter adapter;
     Query query ;
 

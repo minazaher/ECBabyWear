@@ -1,41 +1,43 @@
 package com.example.ecbabywear.UI.OrderHistory;
 
+
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-
 import com.example.ecbabywear.R;
-import com.example.ecbabywear.Repositories.OrderRepository;
-import com.google.android.material.tabs.TabLayout;
+import com.example.ecbabywear.Utilis.PagerAdapter;
+import com.example.ecbabywear.databinding.ActivityOrderHistoryBinding;
+import com.google.android.material.tabs.TabLayoutMediator;
+import java.util.ArrayList;
 
 
 public class OrderHistory extends AppCompatActivity {
-    private TabLayout tabLayout;
-    private FragmentAdapter fragmentAdapter;
-    private ViewPager viewPager;
-    OrderRepository orderRepository;
-    OrderHistoryFragment completedOrdersFragment;
-    CanceledOrderHistoryFragment canceledOrderHistoryFragment;
+    ActivityOrderHistoryBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-        orderRepository=  new OrderRepository();
 
-        tabLayout = findViewById(R.id.tabLayout);
-        viewPager = findViewById(R.id.viewPager);
-
-        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
-        completedOrdersFragment = new OrderHistoryFragment();
-        canceledOrderHistoryFragment = new CanceledOrderHistoryFragment();
-
-        fragmentAdapter.addFragment(completedOrdersFragment, "Completed");
-        fragmentAdapter.addFragment(canceledOrderHistoryFragment, "Cancelled");
-
-        viewPager.setAdapter(fragmentAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        binding = ActivityOrderHistoryBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        binding.ordersToolbar.textView11.setText("Order History");
 
 
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        ArrayList<String> orderTypes = new ArrayList<>();
+        orderTypes.add("Completed");
+        orderTypes.add("Cancelled");
+
+        for (int i = 0; i < 2; i++) {
+            fragments.add(OrderHistoryFragment.newInstance(orderTypes.get(i)));
+        }
+
+
+        PagerAdapter pagerAdapter = new PagerAdapter(this, fragments);
+        binding.viewPager.setAdapter(pagerAdapter);
+
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager, (tab, position) ->
+                tab.setText(orderTypes.get(position))).attach();
     }
 }

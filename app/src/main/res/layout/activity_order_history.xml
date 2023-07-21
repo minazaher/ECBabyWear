@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".UI.OrderHistory.OrderHistory">
-    <include layout="@layout/toolbar"/>
+    <include android:id="@+id/orders_toolbar"
+             layout="@layout/toolbar"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -18,7 +19,7 @@
         app:tabMode="auto"
         app:tabGravity="fill"/>
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -46,8 +46,7 @@ public class WishlistActivity extends AppCompatActivity {
 
     private void getWishlist(){
         wishlist = new Wishlist();
-        viewModel.getWishlist().observe(this, this::initializeNewArrivalsRecycler
-        );
+        viewModel.getWishlist().observe(this, this::initializeNewArrivalsRecycler);
     }
 
 
